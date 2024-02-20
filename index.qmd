@@ -44,9 +44,6 @@ In general, the choice of render is based on need for speed and preference for t
 The developer(s) of OVITO really try to provide very modern tools for visualization. This [includes](https://www.ovito.org/docs/dev/reference/file_formats/output/gltf.html) the ability to use [glTF](https://en.wikipedia.org/wiki/GlTF), which is a web standard for displaying 3D models. This means you can display your simulation cell with analysis colorings and make them maninuplateable.
 :::
 
-<iframe src="resources/C60-FCC-Pillar/index.html"></iframe>
-
-
 ## Notebooks
 
 Most of the notebooks have been drafted using [Google Colab](https://colab.research.google.com/) which is a custom version of Jupyter notebooks. The notebooks are then rendered with [Quarto](https://quarto.org/) to produce this website. This makes it so the reader can either copy code snippets in whatever python setup they prefer. Could be VSCode, JupyterLab, Google Colab, etc.
