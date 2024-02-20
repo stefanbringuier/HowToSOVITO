@@ -1,0 +1,74 @@
+project:
+  type: website
+  
+author:
+  - name: Stefan Bringuier
+    affiliations:
+      - name: Materials Scientist
+        department: Independent Researcher
+        city: San Diego
+        country: USA
+        postal-code: 00000
+    orcid: 0000-0001-6753-1437
+    email: stefanbringuier@gmail.com
+    url: https://stefanbringuier.info
+    corrresponding: true
+date: last-modified
+
+website:
+  title: "How to Script with OVITO"
+  page-footer:
+    center: |
+      All content licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) <br> &copy; Stefan Bringuier.
+    right: Built with [Quarto](https://quarto.org/).
+  description: |
+    A collection of recipes for scripting with OVITO.
+  site-url: https://stefanbringuier.github.io/HowToSOVITO
+  repo-url: https://github.com/stefanbringuier/HowToSOVITO
+  repo-actions: [issue]
+  sidebar:
+    alignment: center
+    search: true
+    tools:
+      - icon: globe
+        href: https://stefanbringuier.github.io/HowToSOVITO
+        text: "SOVITO website"
+      - icon: github
+        href: https://github.com/stefanbringuier/HowToSOVITO
+        text: "Github repo for SOVITO website"
+    collapse-level: 2
+    contents:
+      - href: index.qmd
+        text: About
+      - auto: notebooks/*.ipynb
+  page-navigation: true
+  open-graph: true
+
+bibliography: references.bib
+
+citation:
+  type:  webpage
+  container-title: "How to Script in OVITO"
+  publisher: "Github Pages"
+  url: "https://stefanbringuier.github.io/HowToSOVITO"
+
+appendix-cite-as: bibtex
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    css: styles.css
+    toc: true
+    code-copy: true
+    code-tools:
+      toggle: true
+    code-overflow: wrap
+    reference-location: margin
+    citations-hover: true
+    crossrefs-hover: true
+    
+
+
+
