@@ -185,6 +185,12 @@ div.csl-indent {
  <span class="menu-text">Recipe 1: Simple import and visualization</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notebooks/HowToSOVITO_Recipe2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recipe 2: Plotting RDF and BAD with rendered scene</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -247,7 +253,7 @@ div.csl-indent {
 <section id="about" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="about">About</h2>
 <p><a href="https://ovito.org">OVITO</a> is a visualization software for computational chemistry and materials science <span class="citation" data-cites="Stukowski2009">(<a href="#ref-Stukowski2009" role="doc-biblioref">Stukowski 2009</a>)</span>. Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.</p>
-<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;No need for <strong>Pro</strong> subscription</p><p><sup>2</sup>&nbsp;I will use the acronym <strong>SOVITO</strong> regularly</p></div><p>This site is a rendering from a collection of Google Colab/Jupyter notebooks that show reciepes for how to perform visualization and data analysis using scripting OVITO (SOVITO<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>).</p>
+<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;No need for <strong>Pro</strong> subscription</p><p><sup>2</sup>&nbsp;I will use the acronym <strong>SOVITO</strong> regularly</p></div><p>This site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>) interface.</p>
 </section>
 <section id="installing-ovito-python-scripting" class="level2">
 <h2 class="anchored" data-anchor-id="installing-ovito-python-scripting">Installing OVITO python scripting</h2>
@@ -294,12 +300,11 @@ Tip
 <p>The developer(s) of OVITO really try to provide very modern tools for visualization. This <a href="https://www.ovito.org/docs/dev/reference/file_formats/output/gltf.html">includes</a> the ability to use <a href="https://en.wikipedia.org/wiki/GlTF">glTF</a>, which is a web standard for displaying 3D models. This means you can display your simulation cell with analysis colorings and make them maninuplateable.</p>
 </div>
 </div>
-<iframe src="resources/C60-FCC-Pillar/index.html">
-</iframe>
 </section>
 <section id="notebooks" class="level2">
 <h2 class="anchored" data-anchor-id="notebooks">Notebooks</h2>
 <p>Most of the notebooks have been drafted using <a href="https://colab.research.google.com/">Google Colab</a> which is a custom version of Jupyter notebooks. The notebooks are then rendered with <a href="https://quarto.org/">Quarto</a> to produce this website. This makes it so the reader can either copy code snippets in whatever python setup they prefer. Could be VSCode, JupyterLab, Google Colab, etc.</p>
+<p>On each recipe page you should find a links at the top and side to view the notebook version of the webpage displayed.</p>
 
 
 <!-- -->
@@ -921,7 +926,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">OVITO</span><span class="co">](https://ovito.org)</span> is a visualization software for computational chemistry and materials science <span class="co">[</span><span class="ot">@Stukowski2009</span><span class="co">]</span>. Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities^<span class="co">[</span><span class="ot">No need for **Pro** subscription</span><span class="co">]</span>. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>This site is a rendering from a collection of Google Colab/Jupyter notebooks that show reciepes for how to perform visualization and data analysis using scripting OVITO (SOVITO^<span class="co">[</span><span class="ot">I will use the acronym **SOVITO** regularly</span><span class="co">]</span>).</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>This site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO^<span class="co">[</span><span class="ot">I will use the acronym **SOVITO** regularly</span><span class="co">]</span>) interface.</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Installing OVITO python scripting</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
@@ -958,12 +963,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>The developer(s) of OVITO really try to provide very modern tools for visualization. This <span class="co">[</span><span class="ot">includes</span><span class="co">](https://www.ovito.org/docs/dev/reference/file_formats/output/gltf.html)</span> the ability to use <span class="co">[</span><span class="ot">glTF</span><span class="co">](https://en.wikipedia.org/wiki/GlTF)</span>, which is a web standard for displaying 3D models. This means you can display your simulation cell with analysis colorings and make them maninuplateable.</span>
 <span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>&lt;iframe src="resources/C60-FCC-Pillar/index.html"&gt;&lt;/iframe&gt;</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Notebooks</span></span>
 <span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## Notebooks</span></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>Most of the notebooks have been drafted using <span class="co">[</span><span class="ot">Google Colab</span><span class="co">](https://colab.research.google.com/)</span> which is a custom version of Jupyter notebooks. The notebooks are then rendered with <span class="co">[</span><span class="ot">Quarto</span><span class="co">](https://quarto.org/)</span> to produce this website. This makes it so the reader can either copy code snippets in whatever python setup they prefer. Could be VSCode, JupyterLab, Google Colab, etc.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>Most of the notebooks have been drafted using <span class="co">[</span><span class="ot">Google Colab</span><span class="co">](https://colab.research.google.com/)</span> which is a custom version of Jupyter notebooks. The notebooks are then rendered with <span class="co">[</span><span class="ot">Quarto</span><span class="co">](https://quarto.org/)</span> to produce this website. This makes it so the reader can either copy code snippets in whatever python setup they prefer. Could be VSCode, JupyterLab, Google Colab, etc. </span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>On each recipe page you should find a links at the top and side to view the notebook version of the webpage displayed.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

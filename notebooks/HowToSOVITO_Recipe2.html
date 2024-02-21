@@ -9,7 +9,7 @@
 <meta name="author" content="Stefan Bringuier">
 <meta name="dcterms.date" content="2024-02-20">
 
-<title>How to Script with OVITO - Recipe 1: Simple import and visualization</title>
+<title>How to Script with OVITO - Recipe 2: Plotting RDF and BAD with rendered scene</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,8 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../notebooks/HowToSOVITO_Recipe2.html" rel="next">
-<link href="../index.html" rel="prev">
+<link href="../notebooks/HowToSOVITO_Recipe1.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -109,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="How to Script with OVITO - Recipe 1: Simple import and visualization">
+<meta property="og:title" content="How to Script with OVITO - Recipe 2: Plotting RDF and BAD with rendered scene">
 <meta property="og:description" content="How to Script with OVITO">
 <meta property="og:image" content="https://stefanbringuier.github.io/HowToSOVITO/notebooks/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
 <meta property="og:site_name" content="How to Script with OVITO">
@@ -124,7 +123,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/HowToSOVITO_Recipe1.html">Recipe 1: Simple import and visualization</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/HowToSOVITO_Recipe2.html">Recipe 2: Plotting RDF and BAD with rendered scene</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -162,13 +161,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/HowToSOVITO_Recipe1.html" class="sidebar-item-text sidebar-link active">
+  <a href="../notebooks/HowToSOVITO_Recipe1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Recipe 1: Simple import and visualization</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/HowToSOVITO_Recipe2.html" class="sidebar-item-text sidebar-link">
+  <a href="../notebooks/HowToSOVITO_Recipe2.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Recipe 2: Plotting RDF and BAD with rendered scene</span></a>
   </div>
 </li>
@@ -182,22 +181,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#import-ovito-modules" id="toc-import-ovito-modules" class="nav-link active" data-scroll-target="#import-ovito-modules">Import OVITO modules</a></li>
-  <li><a href="#step-1-import-the-lammps-dump-file" id="toc-step-1-import-the-lammps-dump-file" class="nav-link" data-scroll-target="#step-1-import-the-lammps-dump-file">Step 1: Import the LAMMPS dump file</a></li>
-  <li><a href="#step-2-create-a-viewport" id="toc-step-2-create-a-viewport" class="nav-link" data-scroll-target="#step-2-create-a-viewport">Step 2: Create a viewport</a></li>
-  <li><a href="#step-3-render-the-scene-display" id="toc-step-3-render-the-scene-display" class="nav-link" data-scroll-target="#step-3-render-the-scene-display">Step 3: Render the scene &amp; display</a>
+  <li><a href="#import-ovito-modules-and-matplotlib" id="toc-import-ovito-modules-and-matplotlib" class="nav-link active" data-scroll-target="#import-ovito-modules-and-matplotlib">Import OVITO modules and Matplotlib</a></li>
+  <li><a href="#step-1-download-lammps-dump-and-create-ovito-pipeline" id="toc-step-1-download-lammps-dump-and-create-ovito-pipeline" class="nav-link" data-scroll-target="#step-1-download-lammps-dump-and-create-ovito-pipeline">Step 1: Download LAMMPS dump and create OVITO pipeline</a></li>
+  <li><a href="#step-2-functions-for-bad-and-rdf" id="toc-step-2-functions-for-bad-and-rdf" class="nav-link" data-scroll-target="#step-2-functions-for-bad-and-rdf">Step 2: Functions for BAD and RDF</a></li>
+  <li><a href="#step-3-class-for-viewport-overlay-of-rdf-and-bad-plots" id="toc-step-3-class-for-viewport-overlay-of-rdf-and-bad-plots" class="nav-link" data-scroll-target="#step-3-class-for-viewport-overlay-of-rdf-and-bad-plots">Step 3: Class for Viewport Overlay of RDF and BAD plots</a></li>
+  <li><a href="#step-4-ovito-modifiers" id="toc-step-4-ovito-modifiers" class="nav-link" data-scroll-target="#step-4-ovito-modifiers">Step 4: OVITO Modifiers</a></li>
+  <li><a href="#step-5-viewport-and-render" id="toc-step-5-viewport-and-render" class="nav-link" data-scroll-target="#step-5-viewport-and-render">Step 5: Viewport and Render</a>
   <ul class="collapse">
-  <li><a href="#optional-save-a-3d-model" id="toc-optional-save-a-3d-model" class="nav-link" data-scroll-target="#optional-save-a-3d-model">Optional: Save a 3D Model</a></li>
+  <li><a href="#render-single-frame" id="toc-render-single-frame" class="nav-link" data-scroll-target="#render-single-frame">Render Single Frame</a></li>
   </ul></li>
+  <li><a href="#animation" id="toc-animation" class="nav-link" data-scroll-target="#animation">Animation</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/stefanbringuier/HowToSOVITO/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://colab.research.google.com/drive/1U0_evM3D127MQDrTyNZBvyEvDmeMICIf?usp=sharing"><i class="bi bi-file-code"></i>Notebook</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/stefanbringuier/HowToSOVITO/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://colab.research.google.com/drive/1aAWJTpaEe8DwDjzC9wkA1X37z7BDi9FC?usp=sharing"><i class="bi bi-file-code"></i>Notebook</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Recipe 1: Simple import and visualization</h1>
+<h1 class="title">Recipe 2: Plotting RDF and BAD with rendered scene</h1>
 <p class="subtitle lead">How to Script with OVITO</p>
 </div>
 
@@ -234,49 +236,132 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><a target="_blank" href="https://colab.research.google.com/github/stefanbringuier/HowToSOVITO/blob/main/notebooks/HowToSOVITO_Recipe1.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"> </a></p>
-<div id="cell-2" class="cell" data-execution_count="9">
+<p><a target="_blank" href="https://colab.research.google.com/github/stefanbringuier/HowToSOVITO/blob/main/notebooks/HowToSOVITO_Recipe2.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"> </a></p>
+<p>Frequently you’ll want to know what the distribution is of structural quantities. For example you may want to know where the average first nearest neighbor is or the bond-angle formed by a pair os nearest neighbors. This reciepe will allow you to 1.) perform the analysis, 2.) add the plots to the rendered scene.</p>
+<div id="cell-3" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> pip install <span class="op">-</span>U ovito</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="import-ovito-modules" class="level1">
-<h1>Import OVITO modules</h1>
-<p>First we need to import the <code>io</code> and <code>vis</code> modules to create the necessary <code>pipeline</code>, <code>Viewport</code>, and <code>render</code>.</p>
-<div id="cell-4" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.io <span class="im">import</span> import_file, export_file</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.vis <span class="im">import</span> Viewport</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.vis <span class="im">import</span> TachyonRenderer, OSPRayRenderer, OpenGLRenderer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="import-ovito-modules-and-matplotlib" class="level2">
+<h2 class="anchored" data-anchor-id="import-ovito-modules-and-matplotlib">Import OVITO modules and Matplotlib</h2>
+<div id="cell-5" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.io <span class="im">import</span> import_file</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.modifiers <span class="im">import</span> CreateBondsModifier, BondAnalysisModifier, CoordinationAnalysisModifier</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.vis <span class="im">import</span> Viewport, PythonViewportOverlay</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.vis <span class="im">import</span> ViewportOverlayInterface</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.vis <span class="im">import</span> TachyonRenderer, OSPRayRenderer, OpenGLRenderer</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PySide6.QtGui <span class="im">import</span> QImage, QPainter</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.ticker <span class="im">as</span> ticker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-1-import-the-lammps-dump-file" class="level1">
-<h1>Step 1: Import the LAMMPS dump file</h1>
-<p>Here we download a <a href="https://docs.lammps.org/read_data.html">LAMMPS data configuration file format</a> and then import it to create a <a href="https://www.ovito.org/docs/current/python/modules/ovito_pipeline.html">OVITO pipeline</a>. You can think of pipelines as workflows or steps that get applied to a imported file. The <code>add_to_scene</code> method just creates flag to make sure this pipeline gets included in visualization.</p>
-<div id="cell-6" class="cell" data-execution_count="13">
+<section id="step-1-download-lammps-dump-and-create-ovito-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-download-lammps-dump-and-create-ovito-pipeline">Step 1: Download LAMMPS dump and create OVITO pipeline</h2>
+<p>As usually load your file into a OVITO pipeline and the nadd it to scene.</p>
+<div id="cell-7" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>wget  <span class="st">'https://drive.google.com/uc?id=1uN3r_QeKvCi-d5ry16zr9VTVa0SpXuM2&amp;export=download'</span> <span class="op">-</span>O data.FCC<span class="op">-</span>C60<span class="op">-</span>Pillar</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> import_file(<span class="st">'data.FCC-C60-Pillar'</span>,input_format<span class="op">=</span><span class="st">'lammps/data'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> wget  <span class="st">'https://drive.google.com/uc?id=1GZS1AOqJHYe4TVgqfkWR1YbRdYrPBPqB&amp;export=download'</span> <span class="op">-</span>O dump.nacl<span class="op">-</span>melt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> import_file(<span class="st">'dump.nacl-melt'</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>pipeline.add_to_scene()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-2-create-a-viewport" class="level1">
-<h1>Step 2: Create a viewport</h1>
-<p>A <code>Viewport</code> object is what you would see if you used the GUI version of OVITO. We will specify the type as being a <a href="https://www.wikipedia.org/wiki/Orthographic_projection">Orthographic Projection</a> and then we can state the vector for the camera view should be. Finally we zoom in to fit the the view port.</p>
-<p>Much of this is a bit of an iterative process, because you need to toggle it, check the rendered image, and then adjust as desired.</p>
-<div id="cell-8" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>viewport <span class="op">=</span> Viewport(<span class="bu">type</span><span class="op">=</span>Viewport.Type.Ortho, camera_dir<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>viewport.zoom_all()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="step-2-functions-for-bad-and-rdf" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-functions-for-bad-and-rdf">Step 2: Functions for BAD and RDF</h2>
+<p>Plotting using <a href="https://matplotlib.org/">matplotlib</a> is handled as normal python code. The main thing is using the OVITO calculated data (see below). Here we define the matplotlib plotting functions for the <a href="https://wikipedia.org/wiki/Radial_distribution_function">radial distribution function</a> (RDF) and the bond-angle distribution (BAD). These will get used by the <code>Overlay</code> class.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note, that if you know something about the range of values for the <code>y</code> and <code>x</code> axis, you would modify that here, so that during animations the “flickering” of the plots is limited. I haven’t done so here.</p>
+</div>
+</div>
+<div id="cell-9" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_bond_angle_distribution(data):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">5</span><span class="op">/</span><span class="dv">2</span>,<span class="fl">3.5</span><span class="op">/</span><span class="dv">2</span>))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    plt.bar(data[:,<span class="dv">0</span>], data[:,<span class="dv">1</span>], width<span class="op">=</span>data[<span class="dv">1</span>,<span class="dv">0</span>]<span class="op">-</span>data[<span class="dv">0</span>,<span class="dv">0</span>], align<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'Bond angle (degrees)'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'Count'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> plt.gca()</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    ax.tick_params(axis<span class="op">=</span><span class="st">'both'</span>, which<span class="op">=</span><span class="st">'major'</span>, labelsize<span class="op">=</span><span class="dv">6</span>, direction<span class="op">=</span><span class="st">'in'</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="fl">0.0</span>,<span class="dv">300</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    ax.xaxis.set_major_locator(ticker.AutoLocator())</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    ax.yaxis.set_major_locator(ticker.AutoLocator())</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    plt.savefig(<span class="st">'bond_angle_plot.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, transparent<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    plt.close()</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_radial_distribution_function(data):</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">5</span><span class="op">/</span><span class="dv">2</span>, <span class="fl">3.5</span><span class="op">/</span><span class="dv">2</span>))</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    plt.plot(data[:,<span class="dv">0</span>], data[:,<span class="dv">1</span>])</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'Distance'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'g(r)'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> plt.gca()</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    ax.tick_params(axis<span class="op">=</span><span class="st">'both'</span>, which<span class="op">=</span><span class="st">'major'</span>, labelsize<span class="op">=</span><span class="dv">6</span>, direction<span class="op">=</span><span class="st">'in'</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(<span class="fl">0.0</span>,<span class="va">None</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(<span class="fl">0.0</span>,<span class="fl">5.0</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    plt.savefig(<span class="st">'rdf_plot.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, transparent<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    plt.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-3-render-the-scene-display" class="level1">
-<h1>Step 3: Render the scene &amp; display</h1>
-<p>Now we specify the arguments for the method <code>render_image</code> of the <code>Viewport</code> which includes the <code>renderer</code> object itself.</p>
-<div id="cell-10" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>render_args <span class="op">=</span> {</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'filename'</span>: <span class="st">'FCC-C60-Pillar.png'</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'background'</span>: (<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">1.0</span>),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'renderer'</span>: OSPRayRenderer()  <span class="co"># Or use another renderer</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>viewport.render_image(<span class="op">**</span>render_args)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="step-3-class-for-viewport-overlay-of-rdf-and-bad-plots" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-class-for-viewport-overlay-of-rdf-and-bad-plots">Step 3: Class for Viewport Overlay of RDF and BAD plots</h2>
+<p>Now we define a <code>Overlay</code> class that has a method called <code>render</code>. This gets called when a <code>Viewport</code> object is rendered.</p>
+<p>Notice that we have our <code>pipeline.compute</code> here, so all the modifiers that are set in a pipelien get called. We also cal our plotting functions and then open a canvas to add the plots to the scene.</p>
+<div id="cell-11" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Overlay(ViewportOverlayInterface):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> render(<span class="va">self</span>, canvas, <span class="op">**</span>kwargs):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      frame <span class="op">=</span> kwargs[<span class="st">'frame'</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      data <span class="op">=</span> pipeline.compute(frame<span class="op">=</span>frame)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      plot_radial_distribution_function(data.tables[<span class="st">'coordination-rdf'</span>].xy())</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      plot_bond_angle_distribution(data.tables[<span class="st">'bond-angle-distr'</span>].xy())</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">with</span> canvas.qt_painter() <span class="im">as</span> painter:</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        bond_angle_image <span class="op">=</span> QImage(<span class="st">'bond_angle_plot.png'</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        rdf_image <span class="op">=</span> QImage(<span class="st">'rdf_plot.png'</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Define the position and size of the images on the canvas</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        bond_angle_pos <span class="op">=</span> (<span class="fl">1.0</span>, <span class="fl">1.0</span>)  <span class="co"># right-top corner</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        rdf_pos <span class="op">=</span> (<span class="fl">1.0</span>, <span class="fl">0.0</span>)         <span class="co"># right-bottom corner</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        size <span class="op">=</span> (<span class="fl">0.45</span>, <span class="fl">0.45</span>)          <span class="co"># fractional coordinates</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        canvas.draw_image(bond_angle_image, pos<span class="op">=</span>bond_angle_pos, size<span class="op">=</span>size, anchor<span class="op">=</span><span class="st">"north east"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        canvas.draw_image(rdf_image, pos<span class="op">=</span>rdf_pos, size<span class="op">=</span>size, anchor<span class="op">=</span><span class="st">"south east"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-4-ovito-modifiers" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-ovito-modifiers">Step 4: OVITO Modifiers</h2>
+<p>OVITO modifiers are analysis or property calculation/setting routines. For anything you want to do, in terms of analyzing your data from a atomistic simulation, you will use a modifier which is appended to the pipeline via <code>pipeline.modifiers.append(...)</code>. Here the modifiers we use are the <code>BondAnalysisModifier</code> and <code>CoordinationAnalysisModifier</code> to grab the data for plotting the BAD and RDF.</p>
+<div id="cell-13" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create bonds if not already in the dump</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>pipeline.modifiers.append(CreateBondsModifier(cutoff<span class="op">=</span><span class="fl">3.5</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the bond-angle distribution</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>bond_angle_modifier <span class="op">=</span> BondAnalysisModifier()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>pipeline.modifiers.append(bond_angle_modifier)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the radial distribution function</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>rdf_modifier <span class="op">=</span> CoordinationAnalysisModifier(cutoff<span class="op">=</span><span class="fl">6.5</span>, number_of_bins<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>pipeline.modifiers.append(rdf_modifier)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-5-viewport-and-render" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-viewport-and-render">Step 5: Viewport and Render</h2>
+<p>As usually we need to create our <code>Viewport</code> object and then configure it based on how we want to view the scene.</p>
+<p>Then because we are overlaying additional images that have been created by <a href="https://matplotlib.org">matplotlib</a> we need to provide our overlay object to the viewport. Then we add the pipeline to the scene.</p>
+<div id="cell-15" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>viewport <span class="op">=</span> Viewport(<span class="bu">type</span><span class="op">=</span>Viewport.Type.Ortho, camera_dir<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>viewport.zoom_all()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>viewport.camera_pos <span class="op">=</span> [<span class="dv">15</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">15</span>]</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>overlay <span class="op">=</span> PythonViewportOverlay(delegate<span class="op">=</span>Overlay())</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>viewport.overlays.append(overlay)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>pipeline.add_to_scene()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -291,33 +376,51 @@ Note
 <p>We just use the code below to display an image in a notebook.</p>
 </div>
 </div>
-<div id="cell-12" class="cell" data-outputid="ae7dda26-8347-4b44-f473-fff959e44d66" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fname <span class="op">=</span> <span class="st">'FCC-C60-Pillar.png'</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>Image(<span class="bu">open</span>(fname, <span class="st">'rb'</span>).read())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="18">
+<div id="cell-17" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="render-single-frame" class="level3">
+<h3 class="anchored" data-anchor-id="render-single-frame">Render Single Frame</h3>
+<div id="cell-19" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Render image</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>frame<span class="op">=</span><span class="dv">9</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>fstatic <span class="op">=</span> <span class="ss">f'nacl_melt_rendered_frame_</span><span class="sc">{</span>frame<span class="sc">}</span><span class="ss">.png'</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>viewport.render_image(size<span class="op">=</span>(<span class="dv">800</span>, <span class="dv">600</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                      frame<span class="op">=</span>frame,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                      filename<span class="op">=</span>fstatic,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                      renderer<span class="op">=</span>OSPRayRenderer())<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-20" class="cell" data-outputid="e8991904-3cf8-453a-da7f-3cb7dde6b77d" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Image(<span class="bu">open</span>(fstatic, <span class="st">'rb'</span>).read())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 <figure class="figure">
-<p><img src="HowToSOVITO_Recipe1_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="HowToSOVITO_Recipe2_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<section id="optional-save-a-3d-model" class="level2">
-<h2 class="anchored" data-anchor-id="optional-save-a-3d-model">Optional: Save a 3D Model</h2>
-<p>A nice feature is we can save a 3D model representation of our frame/viewport and then manipulate it in real-time in a browser or powerpoint.</p>
-<div id="cell-14" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>export_file(pipeline,<span class="bu">file</span><span class="op">=</span><span class="st">"FCC-C60-Pillar.glb"</span>,<span class="bu">format</span><span class="op">=</span><span class="st">"gltf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-
-
 </section>
+</section>
+<section id="animation" class="level2">
+<h2 class="anchored" data-anchor-id="animation">Animation</h2>
+<div id="cell-22" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fanim <span class="op">=</span> <span class="st">'nacl_melt_animation.gif'</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>viewport.render_anim(size<span class="op">=</span>(<span class="dv">800</span>, <span class="dv">600</span>),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                     every_nth<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                     filename<span class="op">=</span>fanim,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                     renderer<span class="op">=</span>OSPRayRenderer(),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                     fps<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="../resources/recipe2_animation.gif" class="img-fluid"></p>
+
+
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{bringuier2024,
   author = {Bringuier, Stefan},
   publisher = {Github Pages},
-  title = {Recipe 1: {Simple} Import and Visualization},
+  title = {Recipe 2: {Plotting} {RDF} and {BAD} with Rendered Scene},
   date = {2024-02-20},
   url = {https://stefanbringuier.github.io/HowToSOVITO},
   langid = {en}
@@ -907,14 +1010,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../index.html" class="pagination-link  aria-label=" about"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">About</span>
+      <a href="../notebooks/HowToSOVITO_Recipe1.html" class="pagination-link  aria-label=" recipe="" 1:="" simple="" import="" and="" visualization"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Recipe 1: Simple import and visualization</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notebooks/HowToSOVITO_Recipe2.html" class="pagination-link" aria-label="Recipe 2: Plotting RDF and BAD with rendered scene">
-        <span class="nav-page-text">Recipe 2: Plotting RDF and BAD with rendered scene</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "How To Script with OVITO",
     "section": "",
-    "text": "OVITO is a visualization software for computational chemistry and materials science (Stukowski 2009). Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities1. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.\n1 No need for Pro subscription2 I will use the acronym SOVITO regularlyThis site is a rendering from a collection of Google Colab/Jupyter notebooks that show reciepes for how to perform visualization and data analysis using scripting OVITO (SOVITO2).",
+    "text": "OVITO is a visualization software for computational chemistry and materials science (Stukowski 2009). Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities1. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.\n1 No need for Pro subscription2 I will use the acronym SOVITO regularlyThis site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO2) interface.",
     "crumbs": [
       "About"
     ]
@@ -14,7 +14,7 @@
     "href": "index.html#about",
     "title": "How To Script with OVITO",
     "section": "",
-    "text": "OVITO is a visualization software for computational chemistry and materials science (Stukowski 2009). Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities1. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.\n1 No need for Pro subscription2 I will use the acronym SOVITO regularlyThis site is a rendering from a collection of Google Colab/Jupyter notebooks that show reciepes for how to perform visualization and data analysis using scripting OVITO (SOVITO2).",
+    "text": "OVITO is a visualization software for computational chemistry and materials science (Stukowski 2009). Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities1. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.\n1 No need for Pro subscription2 I will use the acronym SOVITO regularlyThis site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO2) interface.",
     "crumbs": [
       "About"
     ]
@@ -44,9 +44,89 @@
     "href": "index.html#notebooks",
     "title": "How To Script with OVITO",
     "section": "Notebooks",
-    "text": "Notebooks\nMost of the notebooks have been drafted using Google Colab which is a custom version of Jupyter notebooks. The notebooks are then rendered with Quarto to produce this website. This makes it so the reader can either copy code snippets in whatever python setup they prefer. Could be VSCode, JupyterLab, Google Colab, etc.",
+    "text": "Notebooks\nMost of the notebooks have been drafted using Google Colab which is a custom version of Jupyter notebooks. The notebooks are then rendered with Quarto to produce this website. This makes it so the reader can either copy code snippets in whatever python setup they prefer. Could be VSCode, JupyterLab, Google Colab, etc.\nOn each recipe page you should find a links at the top and side to view the notebook version of the webpage displayed.",
     "crumbs": [
       "About"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe2.html",
+    "href": "notebooks/HowToSOVITO_Recipe2.html",
+    "title": "Recipe 2: Plotting RDF and BAD with rendered scene",
+    "section": "",
+    "text": "Frequently you’ll want to know what the distribution is of structural quantities. For example you may want to know where the average first nearest neighbor is or the bond-angle formed by a pair os nearest neighbors. This reciepe will allow you to 1.) perform the analysis, 2.) add the plots to the rendered scene.\n%%capture\n! pip install -U ovito",
+    "crumbs": [
+      "Recipe 2: Plotting RDF and BAD with rendered scene"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe2.html#import-ovito-modules-and-matplotlib",
+    "href": "notebooks/HowToSOVITO_Recipe2.html#import-ovito-modules-and-matplotlib",
+    "title": "Recipe 2: Plotting RDF and BAD with rendered scene",
+    "section": "Import OVITO modules and Matplotlib",
+    "text": "Import OVITO modules and Matplotlib\n\nfrom ovito.io import import_file\nfrom ovito.modifiers import CreateBondsModifier, BondAnalysisModifier, CoordinationAnalysisModifier\nfrom ovito.vis import Viewport, PythonViewportOverlay\nfrom ovito.vis import ViewportOverlayInterface\nfrom ovito.vis import TachyonRenderer, OSPRayRenderer, OpenGLRenderer\nfrom PySide6.QtGui import QImage, QPainter\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport matplotlib.ticker as ticker",
+    "crumbs": [
+      "Recipe 2: Plotting RDF and BAD with rendered scene"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe2.html#step-1-download-lammps-dump-and-create-ovito-pipeline",
+    "href": "notebooks/HowToSOVITO_Recipe2.html#step-1-download-lammps-dump-and-create-ovito-pipeline",
+    "title": "Recipe 2: Plotting RDF and BAD with rendered scene",
+    "section": "Step 1: Download LAMMPS dump and create OVITO pipeline",
+    "text": "Step 1: Download LAMMPS dump and create OVITO pipeline\nAs usually load your file into a OVITO pipeline and the nadd it to scene.\n\n%%capture\n! wget  'https://drive.google.com/uc?id=1GZS1AOqJHYe4TVgqfkWR1YbRdYrPBPqB&export=download' -O dump.nacl-melt\npipeline = import_file('dump.nacl-melt')\npipeline.add_to_scene()",
+    "crumbs": [
+      "Recipe 2: Plotting RDF and BAD with rendered scene"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe2.html#step-2-functions-for-bad-and-rdf",
+    "href": "notebooks/HowToSOVITO_Recipe2.html#step-2-functions-for-bad-and-rdf",
+    "title": "Recipe 2: Plotting RDF and BAD with rendered scene",
+    "section": "Step 2: Functions for BAD and RDF",
+    "text": "Step 2: Functions for BAD and RDF\nPlotting using matplotlib is handled as normal python code. The main thing is using the OVITO calculated data (see below). Here we define the matplotlib plotting functions for the radial distribution function (RDF) and the bond-angle distribution (BAD). These will get used by the Overlay class.\n\n\n\n\n\n\nTip\n\n\n\nNote, that if you know something about the range of values for the y and x axis, you would modify that here, so that during animations the “flickering” of the plots is limited. I haven’t done so here.\n\n\n\ndef plot_bond_angle_distribution(data):\n    plt.figure(figsize=(5/2,3.5/2))\n    plt.bar(data[:,0], data[:,1], width=data[1,0]-data[0,0], align='center')\n    plt.xlabel('Bond angle (degrees)', fontsize=8)\n    plt.ylabel('Count', fontsize=8)\n    ax = plt.gca()\n    ax.tick_params(axis='both', which='major', labelsize=6, direction='in')\n    ax.set_ylim(0.0,300)\n    ax.xaxis.set_major_locator(ticker.AutoLocator())\n    ax.yaxis.set_major_locator(ticker.AutoLocator())\n    plt.tight_layout()\n    plt.savefig('bond_angle_plot.png', dpi=300, transparent=True)\n    plt.close()\n\ndef plot_radial_distribution_function(data):\n    plt.figure(figsize=(5/2, 3.5/2))\n    plt.plot(data[:,0], data[:,1])\n    plt.xlabel('Distance', fontsize=8)\n    plt.ylabel('g(r)', fontsize=8)\n    ax = plt.gca()\n    ax.tick_params(axis='both', which='major', labelsize=6, direction='in')\n    ax.set_xlim(0.0,None)\n    ax.set_ylim(0.0,5.0)\n    plt.tight_layout()\n    plt.savefig('rdf_plot.png', dpi=300, transparent=True)\n    plt.close()",
+    "crumbs": [
+      "Recipe 2: Plotting RDF and BAD with rendered scene"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe2.html#step-3-class-for-viewport-overlay-of-rdf-and-bad-plots",
+    "href": "notebooks/HowToSOVITO_Recipe2.html#step-3-class-for-viewport-overlay-of-rdf-and-bad-plots",
+    "title": "Recipe 2: Plotting RDF and BAD with rendered scene",
+    "section": "Step 3: Class for Viewport Overlay of RDF and BAD plots",
+    "text": "Step 3: Class for Viewport Overlay of RDF and BAD plots\nNow we define a Overlay class that has a method called render. This gets called when a Viewport object is rendered.\nNotice that we have our pipeline.compute here, so all the modifiers that are set in a pipelien get called. We also cal our plotting functions and then open a canvas to add the plots to the scene.\n\nclass Overlay(ViewportOverlayInterface):\n    def render(self, canvas, **kwargs):\n      frame = kwargs['frame']\n      data = pipeline.compute(frame=frame)\n      plot_radial_distribution_function(data.tables['coordination-rdf'].xy())\n      plot_bond_angle_distribution(data.tables['bond-angle-distr'].xy())\n      with canvas.qt_painter() as painter:\n        bond_angle_image = QImage('bond_angle_plot.png')\n        rdf_image = QImage('rdf_plot.png')\n        # Define the position and size of the images on the canvas\n        bond_angle_pos = (1.0, 1.0)  # right-top corner\n        rdf_pos = (1.0, 0.0)         # right-bottom corner\n        size = (0.45, 0.45)          # fractional coordinates\n        canvas.draw_image(bond_angle_image, pos=bond_angle_pos, size=size, anchor=\"north east\")\n        canvas.draw_image(rdf_image, pos=rdf_pos, size=size, anchor=\"south east\")",
+    "crumbs": [
+      "Recipe 2: Plotting RDF and BAD with rendered scene"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe2.html#step-4-ovito-modifiers",
+    "href": "notebooks/HowToSOVITO_Recipe2.html#step-4-ovito-modifiers",
+    "title": "Recipe 2: Plotting RDF and BAD with rendered scene",
+    "section": "Step 4: OVITO Modifiers",
+    "text": "Step 4: OVITO Modifiers\nOVITO modifiers are analysis or property calculation/setting routines. For anything you want to do, in terms of analyzing your data from a atomistic simulation, you will use a modifier which is appended to the pipeline via pipeline.modifiers.append(...). Here the modifiers we use are the BondAnalysisModifier and CoordinationAnalysisModifier to grab the data for plotting the BAD and RDF.\n\n# Create bonds if not already in the dump\npipeline.modifiers.append(CreateBondsModifier(cutoff=3.5))\n\n# Calculate the bond-angle distribution\nbond_angle_modifier = BondAnalysisModifier()\npipeline.modifiers.append(bond_angle_modifier)\n\n# Calculate the radial distribution function\nrdf_modifier = CoordinationAnalysisModifier(cutoff=6.5, number_of_bins=100)\npipeline.modifiers.append(rdf_modifier)",
+    "crumbs": [
+      "Recipe 2: Plotting RDF and BAD with rendered scene"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe2.html#step-5-viewport-and-render",
+    "href": "notebooks/HowToSOVITO_Recipe2.html#step-5-viewport-and-render",
+    "title": "Recipe 2: Plotting RDF and BAD with rendered scene",
+    "section": "Step 5: Viewport and Render",
+    "text": "Step 5: Viewport and Render\nAs usually we need to create our Viewport object and then configure it based on how we want to view the scene.\nThen because we are overlaying additional images that have been created by matplotlib we need to provide our overlay object to the viewport. Then we add the pipeline to the scene.\n\nviewport = Viewport(type=Viewport.Type.Ortho, camera_dir=(2, 1, -1))\nviewport.zoom_all()\nviewport.camera_pos = [15, -1, 15]\n\noverlay = PythonViewportOverlay(delegate=Overlay())\nviewport.overlays.append(overlay)\n\npipeline.add_to_scene();\n\n\n\n\n\n\n\nNote\n\n\n\nWe just use the code below to display an image in a notebook.\n\n\n\nfrom IPython.display import Image\n\n\nRender Single Frame\n\n# Render image\nframe=9\nfstatic = f'nacl_melt_rendered_frame_{frame}.png'\nviewport.render_image(size=(800, 600),\n                      frame=frame,\n                      filename=fstatic,\n                      renderer=OSPRayRenderer());\n\n\nImage(open(fstatic, 'rb').read())",
+    "crumbs": [
+      "Recipe 2: Plotting RDF and BAD with rendered scene"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe2.html#animation",
+    "href": "notebooks/HowToSOVITO_Recipe2.html#animation",
+    "title": "Recipe 2: Plotting RDF and BAD with rendered scene",
+    "section": "Animation",
+    "text": "Animation\n\nfanim = 'nacl_melt_animation.gif'\nviewport.render_anim(size=(800, 600),\n                     every_nth=5,\n                     filename=fanim,\n                     renderer=OSPRayRenderer(),\n                     fps=10)",
+    "crumbs": [
+      "Recipe 2: Plotting RDF and BAD with rendered scene"
     ]
   },
   {
