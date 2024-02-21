@@ -7,7 +7,7 @@ subtitle: "A series of recipes and tutorials on how to use python scripting with
 
 [OVITO](https://ovito.org) is a visualization software for computational chemistry and materials science [@Stukowski2009]. Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities^[No need for **Pro** subscription]. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.
 
-This site is a rendering from a collection of Google Colab/Jupyter notebooks that show reciepes for how to perform visualization and data analysis using scripting OVITO (SOVITO^[I will use the acronym **SOVITO** regularly]).
+This site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO^[I will use the acronym **SOVITO** regularly]) interface.
 
 ## Installing OVITO python scripting
 
@@ -46,4 +46,6 @@ The developer(s) of OVITO really try to provide very modern tools for visualizat
 
 ## Notebooks
 
-Most of the notebooks have been drafted using [Google Colab](https://colab.research.google.com/) which is a custom version of Jupyter notebooks. The notebooks are then rendered with [Quarto](https://quarto.org/) to produce this website. This makes it so the reader can either copy code snippets in whatever python setup they prefer. Could be VSCode, JupyterLab, Google Colab, etc.
+Most of the notebooks have been drafted using [Google Colab](https://colab.research.google.com/) which is a custom version of Jupyter notebooks. The notebooks are then rendered with [Quarto](https://quarto.org/) to produce this website. This makes it so the reader can either copy code snippets in whatever python setup they prefer. Could be VSCode, JupyterLab, Google Colab, etc. 
+
+On each recipe page you should find a links at the top and side to view the notebook version of the webpage displayed.
