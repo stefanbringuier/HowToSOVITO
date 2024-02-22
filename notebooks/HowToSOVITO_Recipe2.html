@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Stefan Bringuier">
-<meta name="dcterms.date" content="2024-02-20">
+<meta name="dcterms.date" content="2024-02-22">
 
 <title>How to Script with OVITO - Recipe 2: Plotting RDF and BAD with rendered scene</title>
 <style>
@@ -66,6 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../notebooks/HowToSOVITO_Recipe3.html" rel="next">
 <link href="../notebooks/HowToSOVITO_Recipe1.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -171,6 +172,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Recipe 2: Plotting RDF and BAD with rendered scene</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/HowToSOVITO_Recipe3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recipe 3: Color coding grain boundary atoms</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -224,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 20, 2024</p>
+      <p class="date">February 22, 2024</p>
     </div>
   </div>
   
@@ -390,12 +397,17 @@ Note
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                      filename<span class="op">=</span>fstatic,</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                      renderer<span class="op">=</span>OSPRayRenderer())<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-20" class="cell" data-outputid="e8991904-3cf8-453a-da7f-3cb7dde6b77d" data-execution_count="16">
+<div id="cell-fig-nacl-melt-rdf-bad" class="cell" data-outputid="e8991904-3cf8-453a-da7f-3cb7dde6b77d" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Image(<span class="bu">open</span>(fstatic, <span class="st">'rb'</span>).read())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
-<div>
-<figure class="figure">
-<p><img src="HowToSOVITO_Recipe2_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+<div id="fig-nacl-melt-rdf-bad" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nacl-melt-rdf-bad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="HowToSOVITO_Recipe2_files/figure-html/fig-nacl-melt-rdf-bad-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nacl-melt-rdf-bad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: NaCl melt with corresponding BAD and RDF.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -412,7 +424,16 @@ Note
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                     renderer<span class="op">=</span>OSPRayRenderer(),</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                     fps<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="../resources/recipe2_animation.gif" class="img-fluid"></p>
+<div id="fig-sim-nacl-melt-rdf-bad" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sim-nacl-melt-rdf-bad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../resources/recipe2_animation.gif" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sim-nacl-melt-rdf-bad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Simulation of NaCl visual with RDF and BAD.
+</figcaption>
+</figure>
+</div>
 
 
 </section>
@@ -421,7 +442,7 @@ Note
   author = {Bringuier, Stefan},
   publisher = {Github Pages},
   title = {Recipe 2: {Plotting} {RDF} and {BAD} with Rendered Scene},
-  date = {2024-02-20},
+  date = {2024-02-22},
   url = {https://stefanbringuier.github.io/HowToSOVITO},
   langid = {en}
 }
@@ -1015,6 +1036,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../notebooks/HowToSOVITO_Recipe3.html" class="pagination-link" aria-label="Recipe 3: Color coding grain boundary atoms">
+        <span class="nav-page-text">Recipe 3: Color coding grain boundary atoms</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

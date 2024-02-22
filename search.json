@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "How To Script with OVITO",
     "section": "",
-    "text": "OVITO is a visualization software for computational chemistry and materials science (Stukowski 2009). Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities1. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.\n1 No need for Pro subscription2 I will use the acronym SOVITO regularlyThis site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO2) interface.",
+    "text": "OVITO is a visualization software for computational chemistry and materials science (Stukowski 2009). Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities1. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.\n1 No need for Pro subscription2 I will use the acronym SOVITO regularly3 Both Basic and Pro versionsThis site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO2) interface. This is not a “How to run LAMMPS” nor a guide on how to perform specific analysis. Its merely how one would use SOVITO to get “pre-defined” outcomes similar to those in the GUI3.",
     "crumbs": [
       "About"
     ]
@@ -14,7 +14,7 @@
     "href": "index.html#about",
     "title": "How To Script with OVITO",
     "section": "",
-    "text": "OVITO is a visualization software for computational chemistry and materials science (Stukowski 2009). Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities1. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.\n1 No need for Pro subscription2 I will use the acronym SOVITO regularlyThis site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO2) interface.",
+    "text": "OVITO is a visualization software for computational chemistry and materials science (Stukowski 2009). Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities1. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.\n1 No need for Pro subscription2 I will use the acronym SOVITO regularly3 Both Basic and Pro versionsThis site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO2) interface. This is not a “How to run LAMMPS” nor a guide on how to perform specific analysis. Its merely how one would use SOVITO to get “pre-defined” outcomes similar to those in the GUI3.",
     "crumbs": [
       "About"
     ]
@@ -34,7 +34,7 @@
     "href": "index.html#notes-on-rendering",
     "title": "How To Script with OVITO",
     "section": "Notes on Rendering",
-    "text": "Notes on Rendering\nOVITO has the following options for rendering images:\n\nOpenGL\nTachyon\nOSPRay\nAnari3 (CUDA GPU)\n\n3 This is an experimental renderer and I had trouble getting it to workBoth 1 and 4 are hardware based while 2-3 are software ray tracing programs. For quick rendered images, I find that 1 is the best, however since I’m running the notebooks on Google Colab or JupyterLab in a headless configuration I couldn’t get OpenGL to work so I used 2 or 3.\nIn general, the choice of render is based on need for speed and preference for the stylistic aspects of redendering atomistic simulations. There is no “best” choice for everyone, just use what you like. Therefore in the notebooks just change the render to what you would prefer.\n\n\n\n\n\n\nTip\n\n\n\nThe developer(s) of OVITO really try to provide very modern tools for visualization. This includes the ability to use glTF, which is a web standard for displaying 3D models. This means you can display your simulation cell with analysis colorings and make them maninuplateable.",
+    "text": "Notes on Rendering\nOVITO has the following options for rendering images:\n\nOpenGL\nTachyon\nOSPRay\nAnari4 (CUDA GPU)\n\n4 This is an experimental renderer and I had trouble getting it to workBoth 1 and 4 are hardware based while 2-3 are software ray tracing programs. For quick rendered images, I find that 1 is the best, however since I’m running the notebooks on Google Colab or JupyterLab in a headless configuration I couldn’t get OpenGL to work so I used 2 or 3.\nIn general, the choice of render is based on need for speed and preference for the stylistic aspects of redendering atomistic simulations. There is no “best” choice for everyone, just use what you like. Therefore in the notebooks just change the render to what you would prefer.\n\n\n\n\n\n\nTip\n\n\n\nThe developer(s) of OVITO really try to provide very modern tools for visualization. This includes the ability to use glTF, which is a web standard for displaying 3D models. This means you can display your simulation cell with analysis colorings and make them maninuplateable.",
     "crumbs": [
       "About"
     ]
@@ -47,6 +47,76 @@
     "text": "Notebooks\nMost of the notebooks have been drafted using Google Colab which is a custom version of Jupyter notebooks. The notebooks are then rendered with Quarto to produce this website. This makes it so the reader can either copy code snippets in whatever python setup they prefer. Could be VSCode, JupyterLab, Google Colab, etc.\nOn each recipe page you should find a links at the top and side to view the notebook version of the webpage displayed.",
     "crumbs": [
       "About"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe3.html",
+    "href": "notebooks/HowToSOVITO_Recipe3.html",
+    "title": "Recipe 3: Color coding grain boundary atoms",
+    "section": "",
+    "text": "When you have grain boundaries it is convenient to be able to distinguish those atoms from the bulk. One way to do so is using a order or structural parameter that captures some information about the local environment. OVITO has a few different options built in that enable characterize whether an atom is in an FCC, BCC, HCP, or other structure. Here I’ll be working with the LAMMPS dump file from the example in (Bringuier 2015) which reproduces the results from (Cahn, Mishin, and Suzuki 2006).\n%%capture\n! pip install -U ovito",
+    "crumbs": [
+      "Recipe 3: Color coding grain boundary atoms"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe3.html#import-ovito-modules",
+    "href": "notebooks/HowToSOVITO_Recipe3.html#import-ovito-modules",
+    "title": "Recipe 3: Color coding grain boundary atoms",
+    "section": "Import OVITO modules",
+    "text": "Import OVITO modules\n\nfrom ovito.io import import_file\nfrom ovito.vis import Viewport\nfrom ovito.modifiers import CommonNeighborAnalysisModifier, CalculateDisplacementsModifier\nfrom ovito.modifiers import ExpressionSelectionModifier, DeleteSelectedModifier, InvertSelectionModifier\nfrom ovito.modifiers import AssignColorModifier\nfrom ovito.vis import VectorVis\nfrom ovito.vis import OSPRayRenderer",
+    "crumbs": [
+      "Recipe 3: Color coding grain boundary atoms"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe3.html#step-1-download-and-import-file",
+    "href": "notebooks/HowToSOVITO_Recipe3.html#step-1-download-and-import-file",
+    "title": "Recipe 3: Color coding grain boundary atoms",
+    "section": "Step 1: Download and import file",
+    "text": "Step 1: Download and import file\n\n\n\n\n\n\nNote\n\n\n\nThis LAMMPS dump file was from a 2D simulation but the symmetry is 3D so we reset the PBC for all directions. I’m doing this because I want to maintain the correct structural analysis results.\n\n\n\n%%capture\n! wget 'https://drive.google.com/uc?id=1Id0D6rfHxJOTuPx2RVAYkm2yRBBgIzSE&export=download' -O dump.Cu_Bicrystal_Shear_298K.gz\npipeline = import_file('dump.Cu_Bicrystal_Shear_298K.gz',input_format='lammps/dump')\npipeline.source.data.cell_.pbc = (True, True, True)",
+    "crumbs": [
+      "Recipe 3: Color coding grain boundary atoms"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe3.html#step-2-perform-structural-analysis-and-calculate-displacement-vectors",
+    "href": "notebooks/HowToSOVITO_Recipe3.html#step-2-perform-structural-analysis-and-calculate-displacement-vectors",
+    "title": "Recipe 3: Color coding grain boundary atoms",
+    "section": "Step 2: Perform structural analysis and calculate displacement vectors",
+    "text": "Step 2: Perform structural analysis and calculate displacement vectors\nI will use the CommonNeighborAnalysisModifier which provides standard structural analysis to identify the closed-packing of the crystal (e.g., FCC, BCC, HCP, ICO).\nOnce the structure modifier is used, I will color code just the atoms that are of StructureType == which corresponds to “Other”. To do this we can use the modifier to select these atoms and then color code.\n\npipeline.modifiers.append(CommonNeighborAnalysisModifier())\n\n# Select particles based on structure type and position\nexpression = 'StructureType != 0 || (Position.Z &gt; CellSize.Z-5 || Position.Z &lt; 5.0 )'\npipeline.modifiers.append(ExpressionSelectionModifier(expression=expression))\n\n# Color the selected particles\npipeline.modifiers.append(AssignColorModifier(color=(0.0, 0.5, 1.0))) \npipeline.modifiers.append(InvertSelectionModifier())\n# Now color the GB atoms\npipeline.modifiers.append(AssignColorModifier(color=(0.8, 0.5, 0.2)))\npipeline.modifiers.append(InvertSelectionModifier())\n\npipeline.add_to_scene()",
+    "crumbs": [
+      "Recipe 3: Color coding grain boundary atoms"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe3.html#step-3-render-first-animation",
+    "href": "notebooks/HowToSOVITO_Recipe3.html#step-3-render-first-animation",
+    "title": "Recipe 3: Color coding grain boundary atoms",
+    "section": "Step 3: Render first animation",
+    "text": "Step 3: Render first animation\n\nvp = Viewport(type=Viewport.Type.Ortho)\nvp.camera_dir = [-1, 0, 0]\nvp.zoom_all()\nrenderer = OSPRayRenderer(\n    ambient_light_enabled=True,\n    denoising_enabled=True,\n    direct_light_enabled=True,\n    direct_light_intensity=1.0,\n    material_shininess=10.0,\n    material_specular_brightness=0.02\n)\n\nfname = \"Cu_Bicrystal_Shear_298K_ColorCoding.gif\"\nvp.render_anim(size=(600,400), \n               filename=fname, \n               renderer=renderer)\n\n\n\n\n\n\n\nNote\n\n\n\nThe code below is to allow for displaying rendered images in Google Colab.\n\n\n\ntry:\n    import google.colab\n    from IPython.display import Image\n    Image(open(fname, 'rb').read())\nexcept ImportError:\n    \"Assuming local run.\"\n\n\n\n\n\n\n\nFigure 1: Grain boundary color coded.",
+    "crumbs": [
+      "Recipe 3: Color coding grain boundary atoms"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe3.html#step-4-displacement-vectors",
+    "href": "notebooks/HowToSOVITO_Recipe3.html#step-4-displacement-vectors",
+    "title": "Recipe 3: Color coding grain boundary atoms",
+    "section": "Step 4: Displacement vectors",
+    "text": "Step 4: Displacement vectors\nWe may want to show how the atoms at the grain boundary are moving with respect to the shear force. We can do this with the displacement vectors. The displacement vectors are taken with respect to an previous frame offset of 25. This is used to showcase how the grain boundary atoms are moving, what you’ll see is that its in a cork-screw like manner.\nSince we already have a pipeline and all we want to do is add the displacement vectors and then disable visualizing the particles themselves. I also just want to so the displacement vectors for the grain boundary atoms, so I need to delete the selected particles and then we just need to add a few additional lines of code and then re-render to a new animation file.\n\n\n# Visualization object for vector arrows\nvec_vis = VectorVis(width=0.1,\n                    scaling=1.5,\n                    flat_shading=False,\n                    color=(1,0,0))\n\ndisplacement_mod = CalculateDisplacementsModifier(frame_offset=-25,\n                                                  use_frame_offset=True,\n                                                  vis=vec_vis)\ndisplacement_mod.vis.enabled = True\npipeline.modifiers.append(displacement_mod)\n\n# Need this line to turn off particle visibility\n# Delete elected particles\npipeline.modifiers.append(DeleteSelectedModifier(operate_on={'particles'}))\npipeline.compute(frame=25).particles.vis.enabled = False",
+    "crumbs": [
+      "Recipe 3: Color coding grain boundary atoms"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe3.html#step-5-render-second-animation",
+    "href": "notebooks/HowToSOVITO_Recipe3.html#step-5-render-second-animation",
+    "title": "Recipe 3: Color coding grain boundary atoms",
+    "section": "Step 5: Render second animation",
+    "text": "Step 5: Render second animation\n\nvp2 = Viewport(type=Viewport.Type.Ortho)\nvp2.camera_dir = [-1, 0, 0]\nvp2.zoom_all()\nfname = \"Cu_Bicrystal_Shear_298K_DisplacementVectors.gif\"\nnframes = pipeline.source.num_frames\nvp2.render_anim(size=(600,400), \n               filename=fname, \n               range=(25,nframes),\n               renderer=renderer)\n\n\ntry:\n    import google.colab\n    from IPython.display import Image\n    Image(open(fname, 'rb').read())\nexcept ImportError:\n    \"Assuming local run.\"\n\n\n\n\n\n\n\nFigure 2: Visualization of displacement vectors for grain boundary.",
+    "crumbs": [
+      "Recipe 3: Color coding grain boundary atoms"
     ]
   },
   {
@@ -114,7 +184,7 @@
     "href": "notebooks/HowToSOVITO_Recipe2.html#step-5-viewport-and-render",
     "title": "Recipe 2: Plotting RDF and BAD with rendered scene",
     "section": "Step 5: Viewport and Render",
-    "text": "Step 5: Viewport and Render\nAs usually we need to create our Viewport object and then configure it based on how we want to view the scene.\nThen because we are overlaying additional images that have been created by matplotlib we need to provide our overlay object to the viewport. Then we add the pipeline to the scene.\n\nviewport = Viewport(type=Viewport.Type.Ortho, camera_dir=(2, 1, -1))\nviewport.zoom_all()\nviewport.camera_pos = [15, -1, 15]\n\noverlay = PythonViewportOverlay(delegate=Overlay())\nviewport.overlays.append(overlay)\n\npipeline.add_to_scene();\n\n\n\n\n\n\n\nNote\n\n\n\nWe just use the code below to display an image in a notebook.\n\n\n\nfrom IPython.display import Image\n\n\nRender Single Frame\n\n# Render image\nframe=9\nfstatic = f'nacl_melt_rendered_frame_{frame}.png'\nviewport.render_image(size=(800, 600),\n                      frame=frame,\n                      filename=fstatic,\n                      renderer=OSPRayRenderer());\n\n\nImage(open(fstatic, 'rb').read())",
+    "text": "Step 5: Viewport and Render\nAs usually we need to create our Viewport object and then configure it based on how we want to view the scene.\nThen because we are overlaying additional images that have been created by matplotlib we need to provide our overlay object to the viewport. Then we add the pipeline to the scene.\n\nviewport = Viewport(type=Viewport.Type.Ortho, camera_dir=(2, 1, -1))\nviewport.zoom_all()\nviewport.camera_pos = [15, -1, 15]\n\noverlay = PythonViewportOverlay(delegate=Overlay())\nviewport.overlays.append(overlay)\n\npipeline.add_to_scene();\n\n\n\n\n\n\n\nNote\n\n\n\nWe just use the code below to display an image in a notebook.\n\n\n\nfrom IPython.display import Image\n\n\nRender Single Frame\n\n# Render image\nframe=9\nfstatic = f'nacl_melt_rendered_frame_{frame}.png'\nviewport.render_image(size=(800, 600),\n                      frame=frame,\n                      filename=fstatic,\n                      renderer=OSPRayRenderer());\n\n\nImage(open(fstatic, 'rb').read())\n\n\n\n\n\n\n\nFigure 1: NaCl melt with corresponding BAD and RDF.",
     "crumbs": [
       "Recipe 2: Plotting RDF and BAD with rendered scene"
     ]
@@ -124,7 +194,7 @@
     "href": "notebooks/HowToSOVITO_Recipe2.html#animation",
     "title": "Recipe 2: Plotting RDF and BAD with rendered scene",
     "section": "Animation",
-    "text": "Animation\n\nfanim = 'nacl_melt_animation.gif'\nviewport.render_anim(size=(800, 600),\n                     every_nth=5,\n                     filename=fanim,\n                     renderer=OSPRayRenderer(),\n                     fps=10)",
+    "text": "Animation\n\nfanim = 'nacl_melt_animation.gif'\nviewport.render_anim(size=(800, 600),\n                     every_nth=5,\n                     filename=fanim,\n                     renderer=OSPRayRenderer(),\n                     fps=10)\n\n\n\n\n\n\n\nFigure 2: Simulation of NaCl visual with RDF and BAD.",
     "crumbs": [
       "Recipe 2: Plotting RDF and BAD with rendered scene"
     ]

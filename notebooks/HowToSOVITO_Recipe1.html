@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Stefan Bringuier">
-<meta name="dcterms.date" content="2024-02-20">
+<meta name="dcterms.date" content="2024-02-22">
 
 <title>How to Script with OVITO - Recipe 1: Simple import and visualization</title>
 <style>
@@ -172,6 +172,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Recipe 2: Plotting RDF and BAD with rendered scene</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/HowToSOVITO_Recipe3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recipe 3: Color coding grain boundary atoms</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -222,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 20, 2024</p>
+      <p class="date">February 22, 2024</p>
     </div>
   </div>
   
@@ -291,14 +297,19 @@ Note
 <p>We just use the code below to display an image in a notebook.</p>
 </div>
 </div>
-<div id="cell-12" class="cell" data-outputid="ae7dda26-8347-4b44-f473-fff959e44d66" data-execution_count="18">
+<div id="cell-fig-FCC-C60-Pillar" class="cell" data-outputid="ae7dda26-8347-4b44-f473-fff959e44d66" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fname <span class="op">=</span> <span class="st">'FCC-C60-Pillar.png'</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>Image(<span class="bu">open</span>(fname, <span class="st">'rb'</span>).read())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
-<div>
-<figure class="figure">
-<p><img src="HowToSOVITO_Recipe1_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+<div id="fig-fcc-c60-pillar" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fcc-c60-pillar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="HowToSOVITO_Recipe1_files/figure-html/fig-fcc-c60-pillar-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fcc-c60-pillar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: FCC packed C60 pillar in a box.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -318,7 +329,7 @@ Note
   author = {Bringuier, Stefan},
   publisher = {Github Pages},
   title = {Recipe 1: {Simple} Import and Visualization},
-  date = {2024-02-20},
+  date = {2024-02-22},
   url = {https://stefanbringuier.github.io/HowToSOVITO},
   langid = {en}
 }

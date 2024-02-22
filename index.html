@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Stefan Bringuier">
-<meta name="dcterms.date" content="2024-02-20">
+<meta name="dcterms.date" content="2024-02-22">
 
 <title>How to Script with OVITO - How To Script with OVITO</title>
 <style>
@@ -191,6 +191,12 @@ div.csl-indent {
  <span class="menu-text">Recipe 2: Plotting RDF and BAD with rendered scene</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notebooks/HowToSOVITO_Recipe3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recipe 3: Color coding grain boundary atoms</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -238,7 +244,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 20, 2024</p>
+      <p class="date">February 22, 2024</p>
     </div>
   </div>
   
@@ -253,7 +259,7 @@ div.csl-indent {
 <section id="about" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="about">About</h2>
 <p><a href="https://ovito.org">OVITO</a> is a visualization software for computational chemistry and materials science <span class="citation" data-cites="Stukowski2009">(<a href="#ref-Stukowski2009" role="doc-biblioref">Stukowski 2009</a>)</span>. Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.</p>
-<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;No need for <strong>Pro</strong> subscription</p><p><sup>2</sup>&nbsp;I will use the acronym <strong>SOVITO</strong> regularly</p></div><p>This site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>) interface.</p>
+<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;No need for <strong>Pro</strong> subscription</p><p><sup>2</sup>&nbsp;I will use the acronym <strong>SOVITO</strong> regularly</p><p><sup>3</sup>&nbsp;Both Basic and Pro versions</p></div><p>This site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>) interface. This is not a “How to run LAMMPS” nor a guide on how to perform specific analysis. Its merely how one would use SOVITO to get “pre-defined” outcomes similar to those in the GUI<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 </section>
 <section id="installing-ovito-python-scripting" class="level2">
 <h2 class="anchored" data-anchor-id="installing-ovito-python-scripting">Installing OVITO python scripting</h2>
@@ -283,9 +289,9 @@ Note
 <li><a href="https://www.ovito.org/manual/python/modules/ovito_vis.html#ovito.vis.OpenGLRenderer">OpenGL</a></li>
 <li><a href="https://www.ovito.org/manual/python/modules/ovito_vis.html#ovito.vis.TachyonRenderer">Tachyon</a></li>
 <li><a href="https://www.ovito.org/manual/python/modules/ovito_vis.html#ovito.vis.OSPRayRenderer">OSPRay</a></li>
-<li><a href="https://www.ovito.org/manual/python/modules/ovito_vis.html#ovito.vis.AnariRenderer">Anari</a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> (CUDA GPU)</li>
+<li><a href="https://www.ovito.org/manual/python/modules/ovito_vis.html#ovito.vis.AnariRenderer">Anari</a><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> (CUDA GPU)</li>
 </ol>
-<div class="no-row-height column-margin column-container"><p><sup>3</sup>&nbsp;This is an experimental renderer and I had trouble getting it to work</p></div><p>Both 1 and 4 are hardware based while 2-3 are software ray tracing programs. For quick rendered images, I find that 1 is the best, however since I’m running the notebooks on Google Colab or JupyterLab in a headless configuration I couldn’t get OpenGL to work so I used 2 or 3.</p>
+<div class="no-row-height column-margin column-container"><p><sup>4</sup>&nbsp;This is an experimental renderer and I had trouble getting it to work</p></div><p>Both 1 and 4 are hardware based while 2-3 are software ray tracing programs. For quick rendered images, I find that 1 is the best, however since I’m running the notebooks on Google Colab or JupyterLab in a headless configuration I couldn’t get OpenGL to work so I used 2 or 3.</p>
 <p>In general, the choice of render is based on need for speed and preference for the stylistic aspects of redendering atomistic simulations. There is no “best” choice for everyone, just use what you like. Therefore in the notebooks just change the render to what you would prefer.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -321,7 +327,7 @@ Stukowski, Alexander. 2009. <span>“Visualization and Analysis of Atomistic Sim
   author = {Bringuier, Stefan},
   publisher = {Github Pages},
   title = {How {To} {Script} with {OVITO}},
-  date = {2024-02-20},
+  date = {2024-02-22},
   url = {https://stefanbringuier.github.io/HowToSOVITO},
   langid = {en}
 }
@@ -926,7 +932,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">OVITO</span><span class="co">](https://ovito.org)</span> is a visualization software for computational chemistry and materials science <span class="co">[</span><span class="ot">@Stukowski2009</span><span class="co">]</span>. Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities^<span class="co">[</span><span class="ot">No need for **Pro** subscription</span><span class="co">]</span>. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>This site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO^<span class="co">[</span><span class="ot">I will use the acronym **SOVITO** regularly</span><span class="co">]</span>) interface.</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>This site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO^<span class="co">[</span><span class="ot">I will use the acronym **SOVITO** regularly</span><span class="co">]</span>) interface. This is not a "How to run LAMMPS" nor a guide on how to perform specific analysis. Its merely how one would use SOVITO to get "pre-defined" outcomes similar to those in the GUI^<span class="co">[</span><span class="ot">Both Basic and Pro versions</span><span class="co">]</span>.</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Installing OVITO python scripting</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
