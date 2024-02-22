@@ -68,6 +68,8 @@ format:
     reference-location: margin
     citations-hover: true
     crossrefs-hover: true
+    grid:
+      body-width: 900px
     
 
 

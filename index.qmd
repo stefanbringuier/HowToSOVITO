@@ -7,7 +7,7 @@ subtitle: "A series of recipes and tutorials on how to use python scripting with
 
 [OVITO](https://ovito.org) is a visualization software for computational chemistry and materials science [@Stukowski2009]. Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities^[No need for **Pro** subscription]. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.
 
-This site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO^[I will use the acronym **SOVITO** regularly]) interface.
+This site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO^[I will use the acronym **SOVITO** regularly]) interface. This is not a "How to run LAMMPS" nor a guide on how to perform specific analysis. Its merely how one would use SOVITO to get "pre-defined" outcomes similar to those in the GUI^[Both Basic and Pro versions].
 
 ## Installing OVITO python scripting
 
