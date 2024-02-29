@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Stefan Bringuier">
-<meta name="dcterms.date" content="2024-02-22">
+<meta name="dcterms.date" content="2024-02-29">
 
-<title>How to Script with OVITO - Recipe 3: Color coding grain boundary atoms</title>
+<title>How to Script with OVITO - Recipe 4: Recreating turntable animation of a model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,8 +86,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../notebooks/HowToSOVITO_Recipe4.html" rel="next">
-<link href="../notebooks/HowToSOVITO_Recipe2.html" rel="prev">
+<link href="../notebooks/HowToSOVITO_Recipe3.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -129,7 +128,7 @@ div.csl-indent {
 
 
 <link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="How to Script with OVITO - Recipe 3: Color coding grain boundary atoms">
+<meta property="og:title" content="How to Script with OVITO - Recipe 4: Recreating turntable animation of a model">
 <meta property="og:description" content="How to Script with OVITO">
 <meta property="og:image" content="https://stefanbringuier.github.io/HowToSOVITO/notebooks/data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==">
 <meta property="og:site_name" content="How to Script with OVITO">
@@ -144,7 +143,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/HowToSOVITO_Recipe3.html">Recipe 3: Color coding grain boundary atoms</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/HowToSOVITO_Recipe4.html">Recipe 4: Recreating turntable animation of a model</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -194,13 +193,13 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/HowToSOVITO_Recipe3.html" class="sidebar-item-text sidebar-link active">
+  <a href="../notebooks/HowToSOVITO_Recipe3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Recipe 3: Color coding grain boundary atoms</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notebooks/HowToSOVITO_Recipe4.html" class="sidebar-item-text sidebar-link">
+  <a href="../notebooks/HowToSOVITO_Recipe4.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Recipe 4: Recreating turntable animation of a model</span></a>
   </div>
 </li>
@@ -214,21 +213,24 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#import-ovito-modules" id="toc-import-ovito-modules" class="nav-link active" data-scroll-target="#import-ovito-modules">Import OVITO modules</a></li>
-  <li><a href="#step-1-download-and-import-file" id="toc-step-1-download-and-import-file" class="nav-link" data-scroll-target="#step-1-download-and-import-file">Step 1: Download and import file</a></li>
-  <li><a href="#step-2-perform-structural-analysis-and-calculate-displacement-vectors" id="toc-step-2-perform-structural-analysis-and-calculate-displacement-vectors" class="nav-link" data-scroll-target="#step-2-perform-structural-analysis-and-calculate-displacement-vectors">Step 2: Perform structural analysis and calculate displacement vectors</a></li>
-  <li><a href="#step-3-render-first-animation" id="toc-step-3-render-first-animation" class="nav-link" data-scroll-target="#step-3-render-first-animation">Step 3: Render first animation</a></li>
-  <li><a href="#step-4-displacement-vectors" id="toc-step-4-displacement-vectors" class="nav-link" data-scroll-target="#step-4-displacement-vectors">Step 4: Displacement vectors</a></li>
-  <li><a href="#step-5-render-second-animation" id="toc-step-5-render-second-animation" class="nav-link" data-scroll-target="#step-5-render-second-animation">Step 5: Render second animation</a></li>
+  <li><a href="#import-ovito-modules" id="toc-import-ovito-modules" class="nav-link active" data-scroll-target="#import-ovito-modules">Import OVITO Modules</a></li>
+  <li><a href="#step-1-remote-import-file" id="toc-step-1-remote-import-file" class="nav-link" data-scroll-target="#step-1-remote-import-file">Step 1: Remote import file</a></li>
+  <li><a href="#step-2-static-pipeline" id="toc-step-2-static-pipeline" class="nav-link" data-scroll-target="#step-2-static-pipeline">Step 2: Static pipeline</a>
+  <ul class="collapse">
+  <li><a href="#some-code-for-color-coding-optional" id="toc-some-code-for-color-coding-optional" class="nav-link" data-scroll-target="#some-code-for-color-coding-optional">Some code for color coding (optional)</a></li>
+  </ul></li>
+  <li><a href="#step-3-translating-center-of-rotation" id="toc-step-3-translating-center-of-rotation" class="nav-link" data-scroll-target="#step-3-translating-center-of-rotation">Step 3: Translating center of rotation</a></li>
+  <li><a href="#step-4-prepare-viewport" id="toc-step-4-prepare-viewport" class="nav-link" data-scroll-target="#step-4-prepare-viewport">Step 4: Prepare Viewport</a></li>
+  <li><a href="#step-5-render-animation-of-scene" id="toc-step-5-render-animation-of-scene" class="nav-link" data-scroll-target="#step-5-render-animation-of-scene">Step 5: Render Animation of scene</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/stefanbringuier/HowToSOVITO/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://colab.research.google.com/drive/11oqMSu_rgyFj5cfCJzHZE9vDVDuq3wyS?usp=sharing"><i class="bi bi-file-code"></i>Notebook</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/stefanbringuier/HowToSOVITO/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://stefanbringuier.github.io/HowToSOVITO/notebooks/HowToSOVITO_Recipe4.ipynb"><i class="bi bi-file-code"></i>Notebook</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Recipe 3: Color coding grain boundary atoms</h1>
+<h1 class="title">Recipe 4: Recreating turntable animation of a model</h1>
 <p class="subtitle lead">How to Script with OVITO</p>
 </div>
 
@@ -253,7 +255,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 22, 2024</p>
+      <p class="date">February 29, 2024</p>
     </div>
   </div>
   
@@ -265,26 +267,108 @@ div.csl-indent {
 </header>
 
 
-<p><a target="_blank" href="https://colab.research.google.com/github/stefanbringuier/HowToSOVITO/blob/main/notebooks/HowToSOVITO_Recipe3.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"> </a></p>
-<p>When you have <a href="https://wikipedia.org/wiki/Grain_boundary">grain boundaries</a> it is convenient to be able to distinguish those atoms from the bulk. One way to do so is using a order or structural parameter that captures some information about the local environment. OVITO has a few different options built in that enable characterize whether an atom is in an FCC, BCC, HCP, or other structure. Here I’ll be working with the LAMMPS dump file from the example in <span class="citation" data-cites="Bringuier2015">(<a href="#ref-Bringuier2015" role="doc-biblioref">Bringuier 2015</a>)</span> which reproduces the results from <span class="citation" data-cites="Cahn2006">(<a href="#ref-Cahn2006" role="doc-biblioref">Cahn, Mishin, and Suzuki 2006</a>)</span>.</p>
-<div id="cell-3" class="cell" data-execution_count="1">
+<p><a target="_blank" href="https://colab.research.google.com/github/stefanbringuier/HowToSOVITO/blob/main/notebooks/HowToSOVITO_Recipe4.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"> </a></p>
+<p>If you look at the tutorials on the <a href="https://www.ovito.org/manual/tutorials/turntable_animation.html#tutorials-turntable-animation">GUI OVITO documentation</a> you find a tutorial showing how to create a turntable animation of a model. If you have access to the <a href="https://www.ovito.org/#proFeatures">Pro OVITO</a> version, they generating the script to batch run this process on several different structures is very straightforward. However, if you only have the <a href="https://www.ovito.org/#download">Basic OVITO</a> version, you cannot. Therefore having using SOVITO is the only option.</p>
+<p>In this notebook we are going to recreate almost the same animation but by scripting from scratch.</p>
+<div id="cell-3" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> pip install <span class="op">-</span>U ovito</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> pip install <span class="op">-</span>U ovito</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> pip install imageio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="import-ovito-modules" class="level2">
-<h2 class="anchored" data-anchor-id="import-ovito-modules">Import OVITO modules</h2>
-<div id="cell-5" class="cell" data-execution_count="2">
+<h2 class="anchored" data-anchor-id="import-ovito-modules">Import OVITO Modules</h2>
+<div id="cell-5" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.io <span class="im">import</span> import_file</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.vis <span class="im">import</span> Viewport</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.modifiers <span class="im">import</span> CommonNeighborAnalysisModifier, CalculateDisplacementsModifier</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.modifiers <span class="im">import</span> ExpressionSelectionModifier, DeleteSelectedModifier, InvertSelectionModifier</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.modifiers <span class="im">import</span> AssignColorModifier</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.vis <span class="im">import</span> VectorVis</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.vis <span class="im">import</span> OSPRayRenderer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.modifiers <span class="im">import</span> AffineTransformationModifier</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.pipeline <span class="im">import</span> StaticSource, Pipeline</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.modifiers <span class="im">import</span> PythonScriptModifier</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.vis <span class="im">import</span> TachyonRenderer</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ovito.vis <span class="im">import</span> Viewport</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imageio.v3 <span class="im">import</span> imread</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imageio <span class="im">import</span> mimsave</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-1-download-and-import-file" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-download-and-import-file">Step 1: Download and import file</h2>
+<section id="step-1-remote-import-file" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-remote-import-file">Step 1: Remote import file</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In previous tutorials I used command line <code>wget</code> to download the file, however, the <code>import_file</code> function has the ability to do remote fetch simply by using a url</p>
+</div>
+</div>
+<p>We import the file and then get the data via the <code>compute</code> method of the <code>pipeline</code> for the frame of interest.</p>
+<div id="cell-7" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>remote_file <span class="op">=</span> <span class="st">"https://gitlab.com/ovito-org/ovito-sample-data/-/raw/04f075def623f25ae1a2d8363a4dcf6e90a0f91a/NetCDF/C60_impact.nc"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pipeline<span class="op">=</span>import_file(remote_file,input_format<span class="op">=</span><span class="st">"netcdf/amber"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>nframes <span class="op">=</span> pipeline.source.num_frames</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pipeline.compute(nframes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-2-static-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-static-pipeline">Step 2: Static pipeline</h2>
+<p>Now we create a new, static, pipeline from the <code>data</code> object.</p>
+<div id="cell-9" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>static_pipeline <span class="op">=</span> Pipeline(source<span class="op">=</span>StaticSource(data<span class="op">=</span>data))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>static_pipeline.add_to_scene()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="some-code-for-color-coding-optional" class="level3">
+<h3 class="anchored" data-anchor-id="some-code-for-color-coding-optional">Some code for color coding (optional)</h3>
+<p>Just so that the rendered turnable animation is similar to the original version, I’m adding some code here to modify the particle color based on the atomic number, Z.</p>
+<div id="cell-11" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>color_map <span class="op">=</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>: (<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>),  <span class="co"># Yellow for Z=1</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">6</span>: (<span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.7</span>)   <span class="co"># Blue for Z=6</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> color_particles_based_on_z(frame, data):</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'Color'</span> <span class="kw">not</span> <span class="kw">in</span> data.particles.keys():</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        data.particles_.create_property(<span class="st">'Color'</span>, </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                                        data<span class="op">=</span>np.zeros((data.particles.count, <span class="dv">3</span>), </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                                                      dtype<span class="op">=</span>np.float32),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                                                      )</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Access the atomic number property</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    z_property <span class="op">=</span> data.particles[<span class="st">'Z'</span>].array  </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> data.particles[<span class="st">'Color'</span>].marray</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Assign colors based on atomic number using the color map</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> z, color <span class="kw">in</span> color_map.items():</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        mask <span class="op">=</span> (z_property <span class="op">==</span> z)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        colors[mask] <span class="op">=</span> color</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>static_pipeline.modifiers.append(PythonScriptModifier(function<span class="op">=</span>color_particles_based_on_z))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="step-3-translating-center-of-rotation" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-translating-center-of-rotation">Step 3: Translating center of rotation</h2>
+<p>As with the GUI OVITO tutorial, we need to move the rotation center via the <code>AffineTransformationModifier</code>. We specify this translation using the transformation matrix <code>kwarg</code>, where the last column is the translation vector.</p>
+<div id="cell-13" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>transformation_matrix <span class="op">=</span> [[<span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="op">-</span><span class="fl">0.5</span>],</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                         [<span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="op">-</span><span class="fl">0.5</span>],</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                         [<span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="op">-</span><span class="fl">0.5</span>]]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>static_pipeline.modifiers.append(AffineTransformationModifier(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    transformation<span class="op">=</span>transformation_matrix,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    reduced_coords<span class="op">=</span><span class="va">True</span>,  </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>static_pipeline.compute()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-4-prepare-viewport" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-prepare-viewport">Step 4: Prepare Viewport</h2>
+<p>One key difference in the approach used in the GUI OVITO implementation, is we cannot use[^1 At least to my knowledge.] the <code>Viewport.render_anim</code> call because we are not rendering simulation scenes but are just take snapshots of a single scene with a different camera location. Thus we need to write a function to adjust the viewport as we desire. My approach just uses a rotation angle in the x-y plane and then a fixed angle in the azimuthal direction. The distance from the origin is set by <code>r</code> which you can change based on your need.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -295,127 +379,68 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This LAMMPS dump file was from a 2D simulation but the symmetry is 3D so we reset the PBC for all directions. I’m doing this because I want to maintain the correct structural analysis results.</p>
+<p>I’m not sure the field of view variable <code>fov</code> does anything here, since it appears this doesn’t mean anything for a <code>Perspective</code> type of view.</p>
 </div>
 </div>
-<div id="cell-7" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> wget <span class="st">'https://drive.google.com/uc?id=1Id0D6rfHxJOTuPx2RVAYkm2yRBBgIzSE&amp;export=download'</span> <span class="op">-</span>O dump.Cu_Bicrystal_Shear_298K.gz</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> import_file(<span class="st">'dump.Cu_Bicrystal_Shear_298K.gz'</span>,input_format<span class="op">=</span><span class="st">'lammps/dump'</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>pipeline.source.data.cell_.pbc <span class="op">=</span> (<span class="va">True</span>, <span class="va">True</span>, <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="step-2-perform-structural-analysis-and-calculate-displacement-vectors" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-perform-structural-analysis-and-calculate-displacement-vectors">Step 2: Perform structural analysis and calculate displacement vectors</h2>
-<p>I will use the <a href="https://www.ovito.org/manual/reference/pipelines/modifiers/common_neighbor_analysis.html">CommonNeighborAnalysisModifier</a> which provides standard structural analysis to identify the closed-packing of the crystal (e.g., FCC, BCC, HCP, ICO).</p>
-<p>Once the structure modifier is used, I will color code just the atoms that are of <code>StructureType ==</code> which corresponds to “Other”. To do this we can use the modifier to select these atoms and then color code.</p>
-<div id="cell-9" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pipeline.modifiers.append(CommonNeighborAnalysisModifier())</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Select particles based on structure type and position</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>expression <span class="op">=</span> <span class="st">'StructureType != 0 || (Position.Z &gt; CellSize.Z-5 || Position.Z &lt; 5.0 )'</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>pipeline.modifiers.append(ExpressionSelectionModifier(expression<span class="op">=</span>expression))</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Color the selected particles</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>pipeline.modifiers.append(AssignColorModifier(color<span class="op">=</span>(<span class="fl">0.0</span>, <span class="fl">0.5</span>, <span class="fl">1.0</span>))) </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>pipeline.modifiers.append(InvertSelectionModifier())</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Now color the GB atoms</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>pipeline.modifiers.append(AssignColorModifier(color<span class="op">=</span>(<span class="fl">0.8</span>, <span class="fl">0.5</span>, <span class="fl">0.2</span>)))</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>pipeline.modifiers.append(InvertSelectionModifier())</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>pipeline.add_to_scene()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-15" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>viewport <span class="op">=</span> Viewport(fov<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>viewport.<span class="bu">type</span> <span class="op">=</span> Viewport.Type.Perspective</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_camera_settings(frame, total_frames, r<span class="op">=</span><span class="dv">125</span>):</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    angle <span class="op">=</span> (frame <span class="op">/</span> total_frames) <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> np.pi</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the new camera position for the circular orbit</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    rx <span class="op">=</span> r <span class="op">*</span> np.sin(angle)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    ry <span class="op">=</span> r <span class="op">*</span> np.cos(angle)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    rz <span class="op">=</span> r <span class="op">/</span> np.sqrt(<span class="dv">2</span>) <span class="co"># Camera at 45 degree in z-azimuthal</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    camera_pos <span class="op">=</span> (rx, ry, rz)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    dir_vector <span class="op">=</span> (<span class="op">-</span>camera_pos[<span class="dv">0</span>], <span class="op">-</span>camera_pos[<span class="dv">1</span>], <span class="op">-</span>camera_pos[<span class="dv">2</span>])</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Normalize the direction vector</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    magnitude <span class="op">=</span> np.linalg.norm(dir_vector)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    camera_dir <span class="op">=</span> (dir_vector[<span class="dv">0</span>]<span class="op">/</span>magnitude, dir_vector[<span class="dv">1</span>]<span class="op">/</span>magnitude, dir_vector[<span class="dv">2</span>]<span class="op">/</span>magnitude)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> camera_pos, camera_dir</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-3-render-first-animation" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-render-first-animation">Step 3: Render first animation</h2>
-<div id="cell-11" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vp <span class="op">=</span> Viewport(<span class="bu">type</span><span class="op">=</span>Viewport.Type.Ortho)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>vp.camera_dir <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>vp.zoom_all()</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>renderer <span class="op">=</span> OSPRayRenderer(</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    ambient_light_enabled<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    denoising_enabled<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    direct_light_enabled<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    direct_light_intensity<span class="op">=</span><span class="fl">1.0</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    material_shininess<span class="op">=</span><span class="fl">10.0</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    material_specular_brightness<span class="op">=</span><span class="fl">0.02</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>fname <span class="op">=</span> <span class="st">"Cu_Bicrystal_Shear_298K_ColorCoding.gif"</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>vp.render_anim(size<span class="op">=</span>(<span class="dv">600</span>,<span class="dv">400</span>), </span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>               filename<span class="op">=</span>fname, </span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>               renderer<span class="op">=</span>renderer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="step-5-render-animation-of-scene" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-render-animation-of-scene">Step 5: Render Animation of scene</h2>
+<p>The key difference in this animation is that we are moving the camera around the static scene/frame to generate the perspective of a rotating object. To achieve this we loop over the number of camera positions (i.e., animation length) update the camera position and direction vector, render the scene to a temporary image file, and then use the <code>imageio</code> package to create an animation from all the rendered scenes.</p>
+<div id="cell-17" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>animation_length <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>renderer <span class="op">=</span> TachyonRenderer(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    ambient_occlusion<span class="op">=</span><span class="va">True</span>,  </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    ambient_occlusion_brightness<span class="op">=</span><span class="fl">0.8</span>,  </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    antialiasing<span class="op">=</span><span class="va">True</span>,  </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    antialiasing_samples<span class="op">=</span><span class="dv">64</span>,  </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    direct_light<span class="op">=</span><span class="va">True</span>,  </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    direct_light_intensity<span class="op">=</span><span class="fl">0.9</span>, </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    shadows<span class="op">=</span><span class="va">True</span>,  </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    depth_of_field<span class="op">=</span><span class="va">False</span>, </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    focal_length<span class="op">=</span><span class="fl">40.0</span>,  </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    aperture<span class="op">=</span><span class="fl">0.01</span>  </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>image_paths <span class="op">=</span> []</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> frame <span class="kw">in</span> <span class="bu">range</span>(animation_length):</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    camera_pos, camera_dir <span class="op">=</span> update_camera_settings(frame, animation_length)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    viewport.camera_pos <span class="op">=</span> camera_pos</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    viewport.camera_dir <span class="op">=</span> camera_dir</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    filename <span class="op">=</span> <span class="ss">f"temp_frame_</span><span class="sc">{</span>frame<span class="sc">:04d}</span><span class="ss">.png"</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    image_paths.append(filename)  <span class="co"># Store for later deletion</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    viewport.render_image(filename<span class="op">=</span>filename, size<span class="op">=</span>(<span class="dv">600</span>, <span class="dv">400</span>), renderer<span class="op">=</span>renderer)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a GIF from the images</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>gif_filename <span class="op">=</span> <span class="st">'recipe4_animation.gif'</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> [imread(filename) <span class="cf">for</span> filename <span class="kw">in</span> image_paths]</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>mimsave(gif_filename, images, fps<span class="op">=</span><span class="dv">25</span>, loop<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete the temporary images</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> filename <span class="kw">in</span> image_paths:</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    os.remove(filename)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The code below is to allow for displaying rendered images in Google Colab.</p>
-</div>
-</div>
-<div id="cell-13" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> google.colab</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> IPython.display <span class="im">import</span> Image</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    Image(<span class="bu">open</span>(fname, <span class="st">'rb'</span>).read())</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ImportError</span>:</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Assuming local run."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="fig-gb-colored" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-gb-colored-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../resources/recipe3_animation_1.gif" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gb-colored-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Grain boundary color coded.
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="step-4-displacement-vectors" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-displacement-vectors">Step 4: Displacement vectors</h2>
-<p>We may want to show how the atoms at the grain boundary are moving with respect to the shear force. We can do this with the displacement vectors. The displacement vectors are taken with respect to an previous frame offset of 25. This is used to showcase how the grain boundary atoms are moving, what you’ll see is that its in a cork-screw like manner.</p>
-<p>Since we already have a pipeline and all we want to do is add the displacement vectors and then disable visualizing the particles themselves. I also just want to so the displacement vectors for the grain boundary atoms, so I need to delete the selected particles and then we just need to add a few additional lines of code and then re-render to a new animation file.</p>
-<div id="cell-17" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization object for vector arrows</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>vec_vis <span class="op">=</span> VectorVis(width<span class="op">=</span><span class="fl">0.1</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                    scaling<span class="op">=</span><span class="fl">1.5</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                    flat_shading<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>displacement_mod <span class="op">=</span> CalculateDisplacementsModifier(frame_offset<span class="op">=-</span><span class="dv">25</span>,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                                                  use_frame_offset<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                                                  vis<span class="op">=</span>vec_vis)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>displacement_mod.vis.enabled <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>pipeline.modifiers.append(displacement_mod)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Need this line to turn off particle visibility</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete elected particles</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>pipeline.modifiers.append(DeleteSelectedModifier(operate_on<span class="op">=</span>{<span class="st">'particles'</span>}))</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>pipeline.compute(frame<span class="op">=</span><span class="dv">25</span>).particles.vis.enabled <span class="op">=</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="step-5-render-second-animation" class="level2">
-<h2 class="anchored" data-anchor-id="step-5-render-second-animation">Step 5: Render second animation</h2>
-<div id="cell-19" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>vp2 <span class="op">=</span> Viewport(<span class="bu">type</span><span class="op">=</span>Viewport.Type.Ortho)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>vp2.camera_dir <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>]</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>vp2.zoom_all()</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>fname <span class="op">=</span> <span class="st">"Cu_Bicrystal_Shear_298K_DisplacementVectors.gif"</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>nframes <span class="op">=</span> pipeline.source.num_frames</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>vp2.render_anim(size<span class="op">=</span>(<span class="dv">600</span>,<span class="dv">400</span>), </span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>               filename<span class="op">=</span>fname, </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>               <span class="bu">range</span><span class="op">=</span>(<span class="dv">25</span>,nframes),</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>               renderer<span class="op">=</span>renderer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-20" class="cell" data-execution_count="10">
+<div id="cell-18" class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> google.colab</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> IPython.display <span class="im">import</span> Image</span>
@@ -423,15 +448,32 @@ Figure&nbsp;1: Grain boundary color coded.
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ImportError</span>:</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Assuming local run."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="fig-gb-displacement-vecs" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-turnable" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-gb-displacement-vecs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../resources/recipe3_animation_2.gif" class="img-fluid figure-img">
+<div aria-describedby="fig-turnable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../resources/recipe4_animation.gif" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gb-displacement-vecs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Visualization of displacement vectors for grain boundary.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-turnable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Reproducing the turnable animation in the OVITO Basic GUI tutorial.
 </figcaption>
 </figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A few things to note:</p>
+<ol type="1">
+<li>The perspective view is a little different from that shown in the <a href="https://www.ovito.org/manual/_images/turntable.gif">original</a> mainly because I’m not exactly sure the settings of the camera. You will need to adjust the settings based on your data.</li>
+<li>In my opinion this recipe may bit a bit unessecary, because with OVITO 3.10 and above you can use the <a href="https://www.ovito.org/docs/dev/reference/file_formats/output/gltf.html#file-formats-output-gltf">glTF</a> format which creates 3D models that can be animated to rotate and are manipulatable. Furthermore, you can use the <a href="https://www.ovito.org/docs/dev/python/modules/ovito_io_ase.html#module-ovito.io.ase"><code>ovito_to_ase</code></a> call to create an ASE Atoms object and then use ASE io to save to html and use X3DOM <span class="citation" data-cites="Bringuier27FEB2024">(<a href="#ref-Bringuier27FEB2024" role="doc-biblioref">Bringuier 2024</a>)</span>.</li>
+</ol>
+</div>
 </div>
 
 
@@ -439,17 +481,14 @@ Figure&nbsp;2: Visualization of displacement vectors for grain boundary.
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-Bringuier2015" class="csl-entry" role="listitem">
-Bringuier, Stefan. 2015. <span>“Reproducing Cu Bicrystal Grain Boundary Coupling Motion to Shear Deformation,”</span> May. <a href="https://doi.org/10.5281/zenodo.3900344">https://doi.org/10.5281/zenodo.3900344</a>.
-</div>
-<div id="ref-Cahn2006" class="csl-entry" role="listitem">
-Cahn, John W., Yuri Mishin, and Akira Suzuki. 2006. <span>“Coupling Grain Boundary Motion to Shear Deformation.”</span> <em>Acta Materialia</em> 54 (19): 4953–75. <a href="https://doi.org/10.1016/j.actamat.2006.08.004">https://doi.org/10.1016/j.actamat.2006.08.004</a>.
+<div id="ref-Bringuier27FEB2024" class="csl-entry" role="listitem">
+Bringuier, Stefan. 2024. <span>“Atomic Dataset Convenience Tool.”</span> Dirac’s Student [Blog]. <a href="https://diracs-student.blogspot.com/2024/02/atomic-dataset-python-convenience-pkg.html">https://diracs-student.blogspot.com/2024/02/atomic-dataset-python-convenience-pkg.html</a>.
 </div>
 </div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{bringuier2024,
   author = {Bringuier, Stefan},
   publisher = {Github Pages},
-  title = {Recipe 3: {Color} Coding Grain Boundary Atoms},
-  date = {2024-02-22},
+  title = {Recipe 4: {Recreating} Turntable Animation of a Model},
+  date = {2024-02-29},
   url = {https://stefanbringuier.github.io/HowToSOVITO},
   langid = {en}
 }
@@ -1038,14 +1077,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../notebooks/HowToSOVITO_Recipe2.html" class="pagination-link  aria-label=" recipe="" 2:="" plotting="" rdf="" and="" bad="" with="" rendered="" scene"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Recipe 2: Plotting RDF and BAD with rendered scene</span>
+      <a href="../notebooks/HowToSOVITO_Recipe3.html" class="pagination-link  aria-label=" recipe="" 3:="" color="" coding="" grain="" boundary="" atoms"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Recipe 3: Color coding grain boundary atoms</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notebooks/HowToSOVITO_Recipe4.html" class="pagination-link" aria-label="Recipe 4: Recreating turntable animation of a model">
-        <span class="nav-page-text">Recipe 4: Recreating turntable animation of a model</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "How To Script with OVITO",
     "section": "",
-    "text": "OVITO is a visualization software for computational chemistry and materials science (Stukowski 2009). Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities1. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.\n1 No need for Pro subscription2 I will use the acronym SOVITO regularly3 Both Basic and Pro versionsThis site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO2) interface. This is not a “How to run LAMMPS” nor a guide on how to perform specific analysis. Its merely how one would use SOVITO to get “pre-defined” outcomes similar to those in the GUI3.",
+    "text": "OVITO is a visualization software for computational chemistry and materials science (Stukowski 2009). Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities1. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.\n1 No need for Pro subscription2 I will use the acronym SOVITO regularly3 Both Basic and Pro versionsThis site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO2) interface. This is not a “How to run LAMMPS” nor a guide on how to perform specific analysis. Its merely how one would use SOVITO to get “pre-defined” outcomes similar to those in the GUI3.\nIn addition to these recipes, you can find examples on the OVITO scripting documentation here. Some of the example scripts there can be ran on there own, while the modifier, scripts are intended to be combined with a pipeline object.",
     "crumbs": [
       "About"
     ]
@@ -14,7 +14,7 @@
     "href": "index.html#about",
     "title": "How To Script with OVITO",
     "section": "",
-    "text": "OVITO is a visualization software for computational chemistry and materials science (Stukowski 2009). Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities1. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.\n1 No need for Pro subscription2 I will use the acronym SOVITO regularly3 Both Basic and Pro versionsThis site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO2) interface. This is not a “How to run LAMMPS” nor a guide on how to perform specific analysis. Its merely how one would use SOVITO to get “pre-defined” outcomes similar to those in the GUI3.",
+    "text": "OVITO is a visualization software for computational chemistry and materials science (Stukowski 2009). Its primarily used through a graphical user interface (GUI), but it has a standalone python scripting library that allows for full fledge use of all OVITO capabilities1. Its very powerful approach that enables manipulation of atomic simulation data to create beautiful visualizations.\n1 No need for Pro subscription2 I will use the acronym SOVITO regularly3 Both Basic and Pro versionsThis site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO2) interface. This is not a “How to run LAMMPS” nor a guide on how to perform specific analysis. Its merely how one would use SOVITO to get “pre-defined” outcomes similar to those in the GUI3.\nIn addition to these recipes, you can find examples on the OVITO scripting documentation here. Some of the example scripts there can be ran on there own, while the modifier, scripts are intended to be combined with a pipeline object.",
     "crumbs": [
       "About"
     ]
@@ -117,6 +117,76 @@
     "text": "Step 5: Render second animation\n\nvp2 = Viewport(type=Viewport.Type.Ortho)\nvp2.camera_dir = [-1, 0, 0]\nvp2.zoom_all()\nfname = \"Cu_Bicrystal_Shear_298K_DisplacementVectors.gif\"\nnframes = pipeline.source.num_frames\nvp2.render_anim(size=(600,400), \n               filename=fname, \n               range=(25,nframes),\n               renderer=renderer)\n\n\ntry:\n    import google.colab\n    from IPython.display import Image\n    Image(open(fname, 'rb').read())\nexcept ImportError:\n    \"Assuming local run.\"\n\n\n\n\n\n\n\nFigure 2: Visualization of displacement vectors for grain boundary.",
     "crumbs": [
       "Recipe 3: Color coding grain boundary atoms"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe4.html",
+    "href": "notebooks/HowToSOVITO_Recipe4.html",
+    "title": "Recipe 4: Recreating turntable animation of a model",
+    "section": "",
+    "text": "If you look at the tutorials on the GUI OVITO documentation you find a tutorial showing how to create a turntable animation of a model. If you have access to the Pro OVITO version, they generating the script to batch run this process on several different structures is very straightforward. However, if you only have the Basic OVITO version, you cannot. Therefore having using SOVITO is the only option.\nIn this notebook we are going to recreate almost the same animation but by scripting from scratch.\n%%capture\n! pip install -U ovito\n! pip install imageio",
+    "crumbs": [
+      "Recipe 4: Recreating turntable animation of a model"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe4.html#import-ovito-modules",
+    "href": "notebooks/HowToSOVITO_Recipe4.html#import-ovito-modules",
+    "title": "Recipe 4: Recreating turntable animation of a model",
+    "section": "Import OVITO Modules",
+    "text": "Import OVITO Modules\n\nfrom ovito.io import import_file\nfrom ovito.modifiers import AffineTransformationModifier\nfrom ovito.pipeline import StaticSource, Pipeline\nfrom ovito.modifiers import PythonScriptModifier\nfrom ovito.vis import TachyonRenderer\nfrom ovito.vis import Viewport\nimport numpy as np\nfrom imageio.v3 import imread\nfrom imageio import mimsave\nimport os",
+    "crumbs": [
+      "Recipe 4: Recreating turntable animation of a model"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe4.html#step-1-remote-import-file",
+    "href": "notebooks/HowToSOVITO_Recipe4.html#step-1-remote-import-file",
+    "title": "Recipe 4: Recreating turntable animation of a model",
+    "section": "Step 1: Remote import file",
+    "text": "Step 1: Remote import file\n\n\n\n\n\n\nTip\n\n\n\nIn previous tutorials I used command line wget to download the file, however, the import_file function has the ability to do remote fetch simply by using a url\n\n\nWe import the file and then get the data via the compute method of the pipeline for the frame of interest.\n\nremote_file = \"https://gitlab.com/ovito-org/ovito-sample-data/-/raw/04f075def623f25ae1a2d8363a4dcf6e90a0f91a/NetCDF/C60_impact.nc\"\npipeline=import_file(remote_file,input_format=\"netcdf/amber\")\n\nnframes = pipeline.source.num_frames\ndata = pipeline.compute(nframes)",
+    "crumbs": [
+      "Recipe 4: Recreating turntable animation of a model"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe4.html#step-2-static-pipeline",
+    "href": "notebooks/HowToSOVITO_Recipe4.html#step-2-static-pipeline",
+    "title": "Recipe 4: Recreating turntable animation of a model",
+    "section": "Step 2: Static pipeline",
+    "text": "Step 2: Static pipeline\nNow we create a new, static, pipeline from the data object.\n\nstatic_pipeline = Pipeline(source=StaticSource(data=data))\nstatic_pipeline.add_to_scene()\n\n\nSome code for color coding (optional)\nJust so that the rendered turnable animation is similar to the original version, I’m adding some code here to modify the particle color based on the atomic number, Z.\n\ncolor_map = {\n    1: (1.0, 1.0, 0.0),  # Yellow for Z=1\n    6: (0.2, 0.4, 0.7)   # Blue for Z=6\n}\n\ndef color_particles_based_on_z(frame, data):\n    if 'Color' not in data.particles.keys():\n        data.particles_.create_property('Color', \n                                        data=np.zeros((data.particles.count, 3), \n                                                      dtype=np.float32),\n                                                      )\n    # Access the atomic number property\n    z_property = data.particles['Z'].array  \n    colors = data.particles['Color'].marray\n    \n    # Assign colors based on atomic number using the color map\n    for z, color in color_map.items():\n        mask = (z_property == z)\n        colors[mask] = color\n\n\nstatic_pipeline.modifiers.append(PythonScriptModifier(function=color_particles_based_on_z))",
+    "crumbs": [
+      "Recipe 4: Recreating turntable animation of a model"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe4.html#step-3-translating-center-of-rotation",
+    "href": "notebooks/HowToSOVITO_Recipe4.html#step-3-translating-center-of-rotation",
+    "title": "Recipe 4: Recreating turntable animation of a model",
+    "section": "Step 3: Translating center of rotation",
+    "text": "Step 3: Translating center of rotation\nAs with the GUI OVITO tutorial, we need to move the rotation center via the AffineTransformationModifier. We specify this translation using the transformation matrix kwarg, where the last column is the translation vector.\n\ntransformation_matrix = [[1.0, 0.0, 0.0, -0.5],\n                         [0.0, 1.0, 0.0, -0.5],\n                         [0.0, 0.0, 1.0, -0.5]]\nstatic_pipeline.modifiers.append(AffineTransformationModifier(\n    transformation=transformation_matrix,\n    reduced_coords=True,  \n    )\n)\n\nstatic_pipeline.compute();",
+    "crumbs": [
+      "Recipe 4: Recreating turntable animation of a model"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe4.html#step-4-prepare-viewport",
+    "href": "notebooks/HowToSOVITO_Recipe4.html#step-4-prepare-viewport",
+    "title": "Recipe 4: Recreating turntable animation of a model",
+    "section": "Step 4: Prepare Viewport",
+    "text": "Step 4: Prepare Viewport\nOne key difference in the approach used in the GUI OVITO implementation, is we cannot use[^1 At least to my knowledge.] the Viewport.render_anim call because we are not rendering simulation scenes but are just take snapshots of a single scene with a different camera location. Thus we need to write a function to adjust the viewport as we desire. My approach just uses a rotation angle in the x-y plane and then a fixed angle in the azimuthal direction. The distance from the origin is set by r which you can change based on your need.\n\n\n\n\n\n\nNote\n\n\n\nI’m not sure the field of view variable fov does anything here, since it appears this doesn’t mean anything for a Perspective type of view.\n\n\n\nviewport = Viewport(fov=30)\nviewport.type = Viewport.Type.Perspective\n\ndef update_camera_settings(frame, total_frames, r=125):\n    angle = (frame / total_frames) * 2 * np.pi\n    \n    # Calculate the new camera position for the circular orbit\n    rx = r * np.sin(angle)\n    ry = r * np.cos(angle)\n    rz = r / np.sqrt(2) # Camera at 45 degree in z-azimuthal\n    camera_pos = (rx, ry, rz)\n    \n    dir_vector = (-camera_pos[0], -camera_pos[1], -camera_pos[2])\n    # Normalize the direction vector\n    magnitude = np.linalg.norm(dir_vector)\n    camera_dir = (dir_vector[0]/magnitude, dir_vector[1]/magnitude, dir_vector[2]/magnitude)\n    \n    return camera_pos, camera_dir",
+    "crumbs": [
+      "Recipe 4: Recreating turntable animation of a model"
+    ]
+  },
+  {
+    "objectID": "notebooks/HowToSOVITO_Recipe4.html#step-5-render-animation-of-scene",
+    "href": "notebooks/HowToSOVITO_Recipe4.html#step-5-render-animation-of-scene",
+    "title": "Recipe 4: Recreating turntable animation of a model",
+    "section": "Step 5: Render Animation of scene",
+    "text": "Step 5: Render Animation of scene\nThe key difference in this animation is that we are moving the camera around the static scene/frame to generate the perspective of a rotating object. To achieve this we loop over the number of camera positions (i.e., animation length) update the camera position and direction vector, render the scene to a temporary image file, and then use the imageio package to create an animation from all the rendered scenes.\n\nanimation_length = 100\nrenderer = TachyonRenderer(\n    ambient_occlusion=True,  \n    ambient_occlusion_brightness=0.8,  \n    antialiasing=True,  \n    antialiasing_samples=64,  \n    direct_light=True,  \n    direct_light_intensity=0.9, \n    shadows=True,  \n    depth_of_field=False, \n    focal_length=40.0,  \n    aperture=0.01  \n)\nimage_paths = []\n\nfor frame in range(animation_length):\n    camera_pos, camera_dir = update_camera_settings(frame, animation_length)\n    viewport.camera_pos = camera_pos\n    viewport.camera_dir = camera_dir\n    \n    filename = f\"temp_frame_{frame:04d}.png\"\n    image_paths.append(filename)  # Store for later deletion\n    viewport.render_image(filename=filename, size=(600, 400), renderer=renderer)\n\n# Create a GIF from the images\ngif_filename = 'recipe4_animation.gif'\nimages = [imread(filename) for filename in image_paths]\nmimsave(gif_filename, images, fps=25, loop=0)\n\n# Delete the temporary images\nfor filename in image_paths:\n    os.remove(filename)\n\n\ntry:\n    import google.colab\n    from IPython.display import Image\n    Image(open(fname, 'rb').read())\nexcept ImportError:\n    \"Assuming local run.\"\n\n\n\n\n\n\n\nFigure 1: Reproducing the turnable animation in the OVITO Basic GUI tutorial.\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nA few things to note:\n\nThe perspective view is a little different from that shown in the original mainly because I’m not exactly sure the settings of the camera. You will need to adjust the settings based on your data.\nIn my opinion this recipe may bit a bit unessecary, because with OVITO 3.10 and above you can use the glTF format which creates 3D models that can be animated to rotate and are manipulatable. Furthermore, you can use the ovito_to_ase call to create an ASE Atoms object and then use ASE io to save to html and use X3DOM (Bringuier 2024).",
+    "crumbs": [
+      "Recipe 4: Recreating turntable animation of a model"
     ]
   },
   {
