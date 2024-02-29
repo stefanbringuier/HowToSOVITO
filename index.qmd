@@ -9,6 +9,8 @@ subtitle: "A series of recipes and tutorials on how to use python scripting with
 
 This site is a rendering from a collection of Google Colab/Jupyter notebooks that show recipes for how to perform visualization and data analysis using python scripting OVITO (SOVITO^[I will use the acronym **SOVITO** regularly]) interface. This is not a "How to run LAMMPS" nor a guide on how to perform specific analysis. Its merely how one would use SOVITO to get "pre-defined" outcomes similar to those in the GUI^[Both Basic and Pro versions].
 
+In addition to these recipes, you can find examples on the OVITO scripting documentation [here](https://www.ovito.org/docs/dev/python/introduction/examples.html). Some of the example scripts there can be ran on there own, while the `modifier`, scripts are intended to be combined with a `pipeline` object.
+
 ## Installing OVITO python scripting
 
 You don't need to install the GUI version of OVITO to use the code shown on this site. There are two options:
